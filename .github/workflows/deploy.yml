@@ -2,11 +2,11 @@ name: Codespaces Pages Deploy
 
 on:
   push:
-    branches: ["master"] # Change to "master" if your branch uses that name
+    branches: ["master"]
 
 permissions:
   contents: read
-  pages: write      # Overrides the broken telemetry restriction
+  pages: write
   id-token: write
 
 concurrency:
