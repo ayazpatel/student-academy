@@ -15,24 +15,137 @@
             --accent-hover: #2563eb;
             --border-color: #2f354a;
             --success: #10b981;
+
+            /* Navigation Layout Dimensions */
+            --sidebar-width: 260px;
+            --header-mobile-height: 60px;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--bg-primary); color: var(--text-main); padding: 15px; min-height: 100vh; display: flex; flex-direction: column; }
         
-        header { margin-bottom: 15px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
-        h1 { font-size: 20px; color: var(--text-main); letter-spacing: 0.5px; }
+        body { 
+            background-color: var(--bg-primary); 
+            color: var(--text-main); 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+        }
 
-        /* Tabs System */
-        .tabs { display: flex; gap: 5px; margin-bottom: 15px; background: var(--bg-secondary); padding: 5px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; }
-        .tab-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); padding: 10px 12px; font-size: 13px; font-weight: 600; cursor: pointer; border-radius: 6px; transition: all 0.2s ease; text-align: center; }
+        /* Master Application Wrapper Box */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        /* Mobile Top Navigation Sticky bar Header */
+        header { 
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color); 
+            padding: 0 15px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-mobile-height);
+            z-index: 100;
+        }
+        h1 { font-size: 18px; color: var(--text-main); letter-spacing: 0.5px; white-space: nowrap; }
+
+        /* Mobile Hamburger Icon Setup */
+        .menu-toggle {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 5px;
+            z-index: 110;
+        }
+        .menu-toggle span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background-color: currentColor;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        /* Sidebar Navigation Drawer Core Design */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: calc(-1 * var(--sidebar-width));
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            z-index: 105;
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .sidebar.open { left: 0; }
+        .sidebar-header {
+            padding: 20px 15px;
+            border-bottom: 1px solid var(--border-color);
+            display: none; /* Displayed solely on desktop layouts */
+        }
+        
+        .nav-menu {
+            padding: 15px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 12px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            text-align: left;
+            white-space: nowrap;
+        }
         .tab-btn:hover { color: var(--text-main); background: var(--bg-tertiary); }
         .tab-btn.active { background: var(--accent); color: white; }
+
+        /* Dark Fog Backdrop Overlay for Mobile Viewports */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(2px);
+            z-index: 102;
+        }
+        .sidebar-overlay.visible { display: block; }
+
+        /* View viewport main layout window context wrapper */
+        main {
+            flex: 1;
+            padding: 15px;
+            margin-top: var(--header-mobile-height);
+            width: 100%;
+        }
         
         .tab-content { display: none; width: 100%; }
         .tab-content.active { display: block; }
 
-        /* Charge Sheet Layout (Mobile First: Sequential Flow) */
+        /* Charge Sheet Layout (Sequential Flow) */
         .calculator-layout { display: flex; flex-direction: column; gap: 20px; }
         .robbery-grid { display: flex; flex-direction: column; gap: 12px; width: 100%; }
         
@@ -43,7 +156,7 @@
         .btn-add { background: var(--accent); border: none; color: white; padding: 8px 16px; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 12px; }
         .btn-add:hover { background: var(--accent-hover); }
 
-        /* Summary Panel (Flows naturally on mobile, stays clean) */
+        /* Summary Panel */
         .basket-panel { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; height: fit-content; }
         .basket-title { font-size: 16px; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 2px solid var(--border-color); font-weight: 600; }
         .basket-items { max-height: 200px; overflow-y: auto; margin-bottom: 15px; padding-right: 5px; }
@@ -58,13 +171,14 @@
         /* Penal Codes Tab Utilities */
         .filter-bar { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; width: 100%; }
         .search-box { background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 10px 15px; border-radius: 6px; color: white; width: 100%; font-size: 14px; }
-        .filter-buttons-scroll { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 5px; width: 100%; }
+        .filter-buttons-scroll { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 5px; width: 100%; scrollbar-width: none; }
+        .filter-buttons-scroll::-webkit-scrollbar { display: none; }
         .filter-btn { background: var(--bg-tertiary); border: 1px solid var(--border-color); color: var(--text-muted); padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 500; white-space: nowrap; }
         .filter-btn.active { background: var(--bg-primary); border-color: var(--accent); color: var(--accent); }
 
         /* Standard Table Configuration */
         .table-container { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; overflow-x: auto; width: 100%; }
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; min-width: 700px; } /* Ensures table content remains intact on small viewports */
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; min-width: 700px; }
         th { background: var(--bg-tertiary); color: var(--text-main); padding: 12px 15px; font-weight: 600; border-bottom: 1px solid var(--border-color); }
         td { padding: 12px 15px; border-bottom: 1px solid var(--border-color); color: var(--text-muted); vertical-align: top; }
         tr:hover td { color: var(--text-main); background: #1e2230; }
@@ -77,14 +191,33 @@
         .badge-hut { background: #7c3aed; color: #f5f3ff; }
         .badge-internal { background: #db2777; color: #fdf2f8; }
 
-        /* Desktop & Tablet View Grid Activator (>= 768px) */
-        @media (min-width: 768px) {
-            body { padding: 20px; }
-            h1 { font-size: 24px; }
-            .tabs { width: fit-content; }
-            .tab-btn { flex: none; padding: 10px 24px; font-size: 14px; }
-            
-            /* Responsive layout configurations */
+        /* Animation States for Hamburger Icon Component */
+        .menu-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .menu-toggle.open span:nth-child(2) { opacity: 0; }
+        .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* Responsive Breakpoint Switch Trigger Configuration (>= 992px) */
+        @media (min-width: 992px) {
+            header { display: none; }
+            .menu-toggle { display: none; }
+            .sidebar-overlay { display: none !important; }
+
+            .sidebar {
+                left: 0 !important;
+                width: var(--sidebar-width);
+                height: 100vh;
+            }
+            .sidebar-header {
+                display: block;
+            }
+
+            main {
+                margin-left: var(--sidebar-width);
+                margin-top: 0;
+                padding: 30px;
+                width: calc(100% - var(--sidebar-width));
+            }
+
             .calculator-layout { display: grid; grid-template-columns: 1fr 380px; gap: 20px; align-items: start; }
             .robbery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
             .basket-panel { position: sticky; top: 0; }
@@ -97,67 +230,78 @@
 </head>
 <body>
 
-    <header>
-        <h1>Virtual MDT</h1>
-    </header>
+    <div class="app-container">
+        <header>
+            <h1>Virtual MDT</h1>
+            <button class="menu-toggle" id="menuToggle" onclick="toggleSidebar()" aria-label="Toggle Navigation Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </header>
 
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('charge-sheet')">CHARGE SHEET</button>
-        <button class="tab-btn" onclick="switchTab('penal-codes')">PENAL CODES DIRECTORY</button>
-    </div>
-
-    <!-- TAB 1: CHARGE SHEET (ROBBERY BUNDLES) -->
-    <div id="charge-sheet" class="tab-content active">
-        <div class="calculator-layout">
-            <div class="robbery-grid" id="robberyGrid">
-                <!-- Dynamically Inserted Grid Cards -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+        <nav class="sidebar" id="sidebarMenu">
+            <div class="sidebar-header">
+                <h1 style="padding: 5px 0 5px 5px; border-bottom: 1px solid var(--border-color);">Virtual MDT</h1>
             </div>
+            <div class="nav-menu">
+                <button class="tab-btn active" onclick="switchTab('charge-sheet')">CHARGE SHEET</button>
+                <button class="tab-btn" onclick="switchTab('penal-codes')">PENAL CODES DIRECTORY</button>
+            </div>
+        </nav>
 
-            <div class="basket-panel">
-                <div class="basket-title">Booking Summary</div>
-                <div class="basket-items" id="basketItems">
-                    <p style="color: var(--text-muted); font-size: 13px; text-align: center; padding-top: 15px;">No incident presets selected</p>
+        <main>
+            <div id="charge-sheet" class="tab-content active">
+                <div class="calculator-layout">
+                    <div class="robbery-grid" id="robberyGrid">
+                        </div>
+
+                    <div class="basket-panel">
+                        <div class="basket-title">Booking Summary</div>
+                        <div class="basket-items" id="basketItems">
+                            <p style="color: var(--text-muted); font-size: 13px; text-align: center; padding-top: 15px;">No incident presets selected</p>
+                        </div>
+                        <div class="totals">
+                            <div class="total-row"><span>Fine Assessment:</span><span id="summaryFine">$0</span></div>
+                            <div class="total-row"><span>Sentence Time:</span><span id="summaryTime">0 Months</span></div>
+                            <div class="total-row"><span>Recommended Cap:</span><span id="summaryCap">N/A</span></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="totals">
-                    <div class="total-row"><span>Fine Assessment:</span><span id="summaryFine">$0</span></div>
-                    <div class="total-row"><span>Sentence Time:</span><span id="summaryTime">0 Months</span></div>
-                    <div class="total-row"><span>Recommended Cap:</span><span id="summaryCap">N/A</span></div>
+            </div>
+
+            <div id="penal-codes" class="tab-content">
+                <div class="filter-bar">
+                    <input type="text" id="searchBox" class="search-box" placeholder="Search code or description..." oninput="filterTable()">
+                    <div class="filter-buttons-scroll">
+                        <button class="filter-btn active" onclick="filterCategory('all', this)">All</button>
+                        <button class="filter-btn" onclick="filterCategory('traffic_violations', this)">Traffic</button>
+                        <button class="filter-btn" onclick="filterCategory('infraction', this)">Infraction</button>
+                        <button class="filter-btn" onclick="filterCategory('misdemeanor', this)">Misdemeanor</button>
+                        <button class="filter-btn" onclick="filterCategory('felony', this)">Felony</button>
+                        <button class="filter-btn" onclick="filterCategory('hut', this)">H.U.T</button>
+                        <button class="filter-btn" onclick="filterCategory('internal_affairs', this)">Internal Affairs</button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 25%">Offense</th>
+                                <th style="width: 15%">Category</th>
+                                <th style="width: 40%">Statutory Definition</th>
+                                <th style="width: 10%">Fine</th>
+                                <th style="width: 10%">Jail Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="penalCodesTableBody">
+                            </tbody>
+                    </table>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- TAB 2: PENAL CODES -->
-    <div id="penal-codes" class="tab-content">
-        <div class="filter-bar">
-            <input type="text" id="searchBox" class="search-box" placeholder="Search code or description..." oninput="filterTable()">
-            <div class="filter-buttons-scroll">
-                <button class="filter-btn active" onclick="filterCategory('all', this)">All</button>
-                <button class="filter-btn" onclick="filterCategory('traffic_violations', this)">Traffic</button>
-                <button class="filter-btn" onclick="filterCategory('infraction', this)">Infraction</button>
-                <button class="filter-btn" onclick="filterCategory('misdemeanor', this)">Misdemeanor</button>
-                <button class="filter-btn" onclick="filterCategory('felony', this)">Felony</button>
-                <button class="filter-btn" onclick="filterCategory('hut', this)">H.U.T</button>
-                <button class="filter-btn" onclick="filterCategory('internal_affairs', this)">Internal Affairs</button>
-            </div>
-        </div>
-
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width: 25%">Offense</th>
-                        <th style="width: 15%">Category</th>
-                        <th style="width: 40%">Statutory Definition</th>
-                        <th style="width: 10%">Fine</th>
-                        <th style="width: 10%">Jail Time</th>
-                    </tr>
-                </thead>
-                <tbody id="penalCodesTableBody">
-                    <!-- Dynamically Inserted Rows -->
-                </tbody>
-            </table>
-        </div>
+        </main>
     </div>
 
     <script>
@@ -310,12 +454,32 @@
             renderPenalCodesTable();
         };
 
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebarMenu');
+            const overlay = document.getElementById('sidebarOverlay');
+            const toggleBtn = document.getElementById('menuToggle');
+            
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('visible');
+            toggleBtn.classList.toggle('open');
+        }
+
         function switchTab(tabId) {
+            // Close collapsible mobile drawer automatically on click
+            const sidebar = document.getElementById('sidebarMenu');
+            if (sidebar.classList.contains('open')) {
+                toggleSidebar();
+            }
+
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
             
-            event.currentTarget.classList.add('active');
             document.getElementById(tabId).classList.add('active');
+
+            // Synchronize active status updates across navigation button instances
+            document.querySelectorAll(`.tab-btn[onclick="switchTab('${tabId}')"]`).forEach(btn => {
+                btn.classList.add('active');
+            });
         }
 
         function renderChargeSheetGrid() {
