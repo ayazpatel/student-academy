@@ -104,7 +104,6 @@
             bottom: 0;
             left: 0;
             right: 0;
-            /* Hidden initially below the viewport bounds */
             transform: translateY(100%);
             width: 100%;
             height: auto;
@@ -120,8 +119,6 @@
             padding-bottom: env(safe-area-inset-bottom);
         }
         .sidebar.open { transform: translateY(0); }
-
-        /* Elegant Touch Bar Drag Indicator handle for Mobile popups */
         .sidebar::before {
             content: '';
             display: block;
@@ -186,6 +183,7 @@
             flex: 1;
             padding: 20px;
             margin-top: var(--header-mobile-height);
+            margin-bottom: 85px; /* Leave space for floating bar on mobile */
             width: 100%;
         }
         
@@ -218,19 +216,66 @@
         .btn-add { background: var(--accent); border: none; color: white; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 12px; transition: background 0.15s ease; }
         .btn-add:hover { background: var(--accent-hover); }
 
-        /* Summary Panel Layout */
-        .basket-panel { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; height: fit-content; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); }
-        .basket-title { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); font-weight: 700; color: var(--text-muted); }
-        .basket-items { max-height: 260px; overflow-y: auto; margin-bottom: 20px; }
+        /* MOBILE EXCLUSIVE: Elegant Bottom Sheet Popup for Booking Summary */
+        .basket-panel { 
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-secondary); 
+            border-top: 1px solid var(--border-color); 
+            border-radius: 20px 20px 0 0; 
+            padding: 15px 20px; 
+            z-index: 101;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+            max-height: 70px; /* Collapsed view showing stats at a glance */
+            overflow: hidden;
+            transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Trigger class when user clicks the floating bar to open it */
+        .basket-panel.expanded {
+            max-height: 80vh;
+            overflow: visible;
+        }
+
+        /* Interactive Header for Mobile Floating Summary Bar */
+        .basket-header-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding-bottom: 12px;
+        }
+
+        .basket-title { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+        .basket-title::after {
+            content: '▲ Tap to view';
+            font-size: 10px;
+            color: var(--accent);
+            text-transform: none;
+            font-weight: normal;
+        }
+        .basket-panel.expanded .basket-title::after { content: '▼ Close panel'; }
+
+        .basket-items { max-height: 260px; overflow-y: auto; margin-bottom: 20px; display: none; }
+        .basket-panel.expanded .basket-items { display: block; }
+        
         .basket-item { display: flex; justify-content: space-between; align-items: center; font-size: 13px; padding: 10px 0; border-bottom: 1px solid #1e2232; gap: 10px; }
         .basket-item span { color: #cbd5e1; }
         .basket-item strong { color: #fff; white-space: nowrap; font-weight: 600; background: var(--bg-tertiary); padding: 2px 6px; border-radius: 4px; font-size: 12px; }
         
-        .totals { background: rgba(13, 15, 20, 0.5); padding: 16px; border-radius: 8px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 8px; }
-        .total-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); }
-        .total-row span:last-child { color: var(--text-main); font-weight: 600; }
-        .total-row.grand-total { margin-top: 4px; padding-top: 10px; border-top: 1px dashed var(--border-color); font-size: 14px; font-weight: bold; color: #fff; }
-        .total-row.grand-total span:last-child { color: var(--success); font-size: 16px; }
+        .totals { background: rgba(13, 15, 20, 0.5); padding: 16px; border-radius: 8px; border: 1px solid var(--border-color); display: flex; flex-direction: row; flex-wrap: wrap; gap: 15px; justify-content: space-between; }
+        .basket-panel.expanded .totals { flex-direction: column; gap: 8px; }
+
+        .total-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); flex: 1; min-width: 100px; }
+        .total-row span:last-child { color: var(--text-main); font-weight: 600; margin-left: 5px; }
+        .total-row.grand-total { font-size: 13px; font-weight: bold; color: #fff; border-top: none; padding-top: 0; }
+        .total-row.grand-total span:last-child { color: var(--success); font-size: 14px; }
+
+        .basket-panel.expanded .total-row { flex: none; width: 100%; }
+        .basket-panel.expanded .total-row.grand-total { margin-top: 4px; padding-top: 10px; border-top: 1px dashed var(--border-color); font-size: 14px; }
+        .basket-panel.expanded .total-row.grand-total span:last-child { font-size: 16px; }
 
         /* Penal Code Utilities Bar */
         .filter-bar { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; width: 100%; }
@@ -264,68 +309,48 @@
         .menu-toggle.open span:nth-child(2) { opacity: 0; }
         .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-        /* Responsive Configuration Adaptive Responsive Layout Configuration Trigger (>= 992px) */
+        /* Desktop View Layout Shifts (>= 992px) */
         @media (min-width: 992px) {
             header { display: none; }
             .menu-toggle { display: none; }
             .sidebar-overlay { display: none !important; }
 
-            /* Revert back to elegant desktop standard side navbar panel */
+            /* Revert back to desktop standard side navbar panel */
             .sidebar { 
-                top: 0;
-                bottom: 0;
-                left: 0 !important; 
-                right: auto;
-                transform: none !important;
-                width: var(--sidebar-width); 
-                height: 100vh;
-                max-height: none;
-                border-top: none;
-                border-right: 1px solid var(--border-color);
-                border-radius: 0;
-                box-shadow: none;
+                top: 0; bottom: 0; left: 0 !important; right: auto;
+                transform: none !important; width: var(--sidebar-width); height: 100vh;
+                max-height: none; border-top: none; border-right: 1px solid var(--border-color);
+                border-radius: 0; box-shadow: none;
             }
             .sidebar::before { display: none; }
             .sidebar-header { display: block; padding: 24px 20px; text-align: left; border-bottom: 1px solid var(--border-color); }
             .sidebar-header h1 { font-size: 16px; color: #fff; }
 
-            .nav-menu {
-                padding: 20px 12px;
-                gap: 6px;
-                flex: 1;
-                overflow-y: auto;
-            }
-            .tab-btn {
-                background: transparent;
-                border: none;
-                padding: 14px 16px;
-                font-size: 13px;
-                text-align: left;
-                border-radius: 8px;
-            }
+            .nav-menu { padding: 20px 12px; gap: 6px; flex: 1; overflow-y: auto; }
+            .tab-btn { background: transparent; border: none; padding: 14px 16px; font-size: 13px; text-align: left; border-radius: 8px; }
             .tab-btn.active { 
-                background: rgba(59, 130, 246, 0.15); 
-                color: #60a5fa; 
-                border-left: 3px solid var(--accent); 
-                border-radius: 4px 8px 8px 4px; 
-                padding-left: 13px;
-                border-top: none; border-bottom: none; border-right: none;
+                background: rgba(59, 130, 246, 0.15); color: #60a5fa; border-left: 3px solid var(--accent); 
+                border-radius: 4px 8px 8px 4px; padding-left: 13px; border-top: none; border-bottom: none; border-right: none;
             }
 
-            main {
-                margin-left: var(--sidebar-width);
-                margin-top: 0;
-                padding: 40px;
-                width: calc(100% - var(--sidebar-width));
-            }
+            main { margin-left: var(--sidebar-width); margin-top: 0; padding: 40px; margin-bottom: 0; width: calc(100% - var(--sidebar-width)); }
 
             .calculator-layout { display: grid; grid-template-columns: 1fr 400px; gap: 24px; align-items: start; }
             .robbery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
-            .basket-panel { position: sticky; top: 40px; }
             
-            .filter-bar { flex-direction: row; align-items: center; gap: 16px; }
-            .search-box { width: 300px; }
-            .filter-buttons-scroll { overflow-x: visible; width: auto; }
+            /* Revert summary panel back to an elegant stationary side block */
+            .basket-panel { 
+                position: sticky; top: 40px; left: auto; right: auto; bottom: auto;
+                max-height: none !important; border-top: none; border: 1px solid var(--border-color);
+                border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); padding: 20px; overflow: visible;
+            }
+            .basket-header-toggle { cursor: default; pointer-events: none; }
+            .basket-title::after { display: none; }
+            .basket-items { display: block; }
+            .totals { background: rgba(13, 15, 20, 0.5); padding: 16px; border-radius: 8px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 8px; }
+            .total-row { flex: none; width: 100%; }
+            .total-row.grand-total { margin-top: 4px; padding-top: 10px; border-top: 1px dashed var(--border-color); font-size: 14px; }
+            .total-row.grand-total span:last-child { font-size: 16px; }
         }
     </style>
 </head>
@@ -360,15 +385,18 @@
                         <p style="color: var(--text-muted); font-size: 13px; text-align: center; padding: 30px 0; width: 100%;">Loading configuration assets...</p>
                     </div>
 
-                    <div class="basket-panel">
-                        <div class="basket-title">Booking Summary</div>
+                    <!-- Optimized Booking Summary Bottom Sheet System -->
+                    <div class="basket-panel" id="summaryPanel">
+                        <div class="basket-header-toggle" onclick="toggleSummaryPanel()">
+                            <div class="basket-title">Booking Summary</div>
+                        </div>
                         <div class="basket-items" id="basketItems">
                             <p style="color: var(--text-muted); font-size: 13px; text-align: center; padding-top: 30px;">No operational presets loaded</p>
                         </div>
                         <div class="totals">
-                            <div class="total-row"><span>Fine Assessment</span><span id="summaryFine">$0</span></div>
-                            <div class="total-row"><span>Sentence Duration</span><span id="summaryTime">0 Months</span></div>
-                            <div class="total-row grand-total"><span>Recommended Cap</span><span id="summaryCap">N/A</span></div>
+                            <div class="total-row"><span>Fine:</span><span id="summaryFine">$0</span></div>
+                            <div class="total-row"><span>Time:</span><span id="summaryTime">0 Months</span></div>
+                            <div class="total-row grand-total"><span>Cap:</span><span id="summaryCap">N/A</span></div>
                         </div>
                     </div>
                 </div>
@@ -433,7 +461,7 @@
                 ]);
 
                 if (!chargesResponse.ok || !penalCodesResponse.ok) {
-                    throw new Error("HTTP validation sequence failed during file extraction processes.");
+                    throw new Error("HTTP verification failed.");
                 }
 
                 chargeSheetGroups = await chargesResponse.json();
@@ -443,8 +471,8 @@
                 renderPenalCodesTable();
 
             } catch (error) {
-                console.error("Data Fetch Exception Error:", error);
-                document.getElementById('robberyGrid').innerHTML = `<p style="color: var(--danger); font-size: 13px; text-align: center; width: 100%;">Configuration download aborted: ${error.message}</p>`;
+                console.error("Data Fetch Error:", error);
+                document.getElementById('robberyGrid').innerHTML = `<p style="color: var(--danger); font-size: 13px; text-align: center; width: 100%;">Error loading: ${error.message}</p>`;
             }
         };
 
@@ -458,12 +486,21 @@
             toggleBtn.classList.toggle('open');
         }
 
+        // Toggle Expand state for mobile summary bottom card
+        function toggleSummaryPanel() {
+            if (window.innerWidth >= 992) return; // Ignore on desktop
+            const panel = document.getElementById('summaryPanel');
+            panel.classList.toggle('expanded');
+        }
+
         function switchTab(tabId) {
             const sidebar = document.getElementById('sidebarMenu');
-            // If side drawer bottom sheet is currently slid up open, pull it back down on tab select
             if (sidebar.classList.contains('open')) {
                 toggleSidebar();
             }
+
+            // Close booking summary popup if active when changing screens
+            document.getElementById('summaryPanel').classList.remove('expanded');
 
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
@@ -521,6 +558,11 @@
             document.getElementById('summaryFine').innerText = `$${accumulatedFine.toLocaleString()}`;
             document.getElementById('summaryTime').innerText = `${accumulatedTime} Months`;
             document.getElementById('summaryCap').innerText = `$${group.capFine.toLocaleString()} / ${group.capTime} Months`;
+
+            // Open the mobile summary sheet automatically when a preset is loaded
+            if (window.innerWidth < 992) {
+                document.getElementById('summaryPanel').classList.add('expanded');
+            }
         }
 
         function renderPenalCodesTable() {
