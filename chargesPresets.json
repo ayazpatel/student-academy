@@ -14,7 +14,7 @@
     ]
   },
   "house_robbery": {
-    "label": "House Robbery Preset",
+    "label": "House Robbery",
     "capFine": 10000,
     "capTime": 10,
     "charges": [
@@ -28,7 +28,7 @@
     ]
   },
   "atm_robbery": {
-    "label": "ATM Robbery Preset",
+    "label": "ATM Robbery",
     "capFine": 5000,
     "capTime": 10,
     "charges": [
@@ -56,7 +56,7 @@
     ]
   },
   "bank_robbery": {
-    "label": "Bank Robbery Preset",
+    "label": "Bank Robbery",
     "capFine": 25000,
     "capTime": 20,
     "charges": [
@@ -71,7 +71,7 @@
     ]
   },
   "store_robbery": {
-    "label": "Store Robbery Preset",
+    "label": "Store Robbery",
     "capFine": 15000,
     "capTime": 10,
     "charges": [
@@ -86,7 +86,7 @@
     ]
   },
   "illegal_drop": {
-    "label": "Illegal Drop Supply Run",
+    "label": "Illegal Drop",
     "capFine": 10000,
     "capTime": 15,
     "charges": [
@@ -101,7 +101,7 @@
     ]
   },
   "life_invader": {
-    "label": "Life Invader Corporate Raid",
+    "label": "Life Invader",
     "capFine": 15000,
     "capTime": 15,
     "charges": [
