@@ -1,18 +1,4 @@
 {
-  "traffic_stop_to_chase": {
-    "label": "Traffic Stop Escalation (Chase)",
-    "capFine": 6000,
-    "capTime": 8,
-    "charges": [
-      { "label": "First Degree Speeding", "fine": 1000, "jailTime": 0 },
-      { "label": "Failure to Obey Traffic Control Devices", "fine": 500, "jailTime": 0 },
-      { "label": "Reckless Driving", "fine": 1000, "jailTime": 2 },
-      { "label": "Reckless Evading", "fine": 1000, "jailTime": 1 },
-      { "label": "Disobeying a Lawful Command", "fine": 1000, "jailTime": 2 },
-      { "label": "Failure to Provide Identification", "fine": 1000, "jailTime": 2 },
-      { "label": "Vandalism", "fine": 500, "jailTime": 1 }
-    ]
-  },
   "house_robbery": {
     "label": "House Robbery",
     "capFine": 10000,
@@ -33,6 +19,21 @@
     "capTime": 10,
     "charges": [
       { "label": "ATM Robbery", "fine": 2000, "jailTime": 5 },
+      { "label": "Possession of Items Used In Crime", "fine": 1000, "jailTime": 1 },
+      { "label": "Possession of Stolen Property", "fine": 1000, "jailTime": 1 },
+      { "label": "Reckless Evading", "fine": 1000, "jailTime": 1 },
+      { "label": "Vandalism", "fine": 500, "jailTime": 1 },
+      { "label": "Anti-Mask Law", "fine": 500, "jailTime": 1 }
+    ]
+  },
+  "store_robbery": {
+    "label": "Store Robbery",
+    "capFine": 15000,
+    "capTime": 10,
+    "charges": [
+      { "label": "Commercial Robbery", "fine": 6000, "jailTime": 2 },
+      { "label": "Felony Kidnapping / Hostage", "fine": 3000, "jailTime": 3 },
+      { "label": "Criminal Possession of Firearm", "fine": 2000, "jailTime": 3 },
       { "label": "Possession of Items Used In Crime", "fine": 1000, "jailTime": 1 },
       { "label": "Possession of Stolen Property", "fine": 1000, "jailTime": 1 },
       { "label": "Reckless Evading", "fine": 1000, "jailTime": 1 },
@@ -61,21 +62,6 @@
     "capTime": 20,
     "charges": [
       { "label": "Robbery of a Financial Institution", "fine": 16000, "jailTime": 9 },
-      { "label": "Felony Kidnapping / Hostage", "fine": 3000, "jailTime": 3 },
-      { "label": "Criminal Possession of Firearm", "fine": 2000, "jailTime": 3 },
-      { "label": "Possession of Items Used In Crime", "fine": 1000, "jailTime": 1 },
-      { "label": "Possession of Stolen Property", "fine": 1000, "jailTime": 1 },
-      { "label": "Reckless Evading", "fine": 1000, "jailTime": 1 },
-      { "label": "Vandalism", "fine": 500, "jailTime": 1 },
-      { "label": "Anti-Mask Law", "fine": 500, "jailTime": 1 }
-    ]
-  },
-  "store_robbery": {
-    "label": "Store Robbery",
-    "capFine": 15000,
-    "capTime": 10,
-    "charges": [
-      { "label": "Commercial Robbery", "fine": 6000, "jailTime": 2 },
       { "label": "Felony Kidnapping / Hostage", "fine": 3000, "jailTime": 3 },
       { "label": "Criminal Possession of Firearm", "fine": 2000, "jailTime": 3 },
       { "label": "Possession of Items Used In Crime", "fine": 1000, "jailTime": 1 },
