@@ -2,41 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
     <title>Virtual MDT</title>
     <link rel="icon" type="image/png" href="./assets/logo.png">
     <style>
         :root {
-            /* PURE MODERN iOS LIGHT THEME SYSTEM */
-            --bg-base: #f2f2f7;                 /* iOS System Background */
-            --bg-elevated: #ffffff;             /* Pure White Elevated Card */
-            --bg-grouped: #e5e5ea;              /* iOS Grouped Row Background */
-            --bg-pill: #e5e5ea;                 /* Secondary Interaction Elements */
+            /* PURE PREMIUM iOS LIGHT PALETTE (San Francisco Aesthetic) */
+            --bg-base: #f2f2f7;                 
+            --bg-elevated: #ffffff;             
+            --bg-grouped: #f9f9fb;              
+            --bg-pill: #e5e5ea;                 
             
-            --text-main: #000000;               /* Primary Label */
-            --text-secondary: #3c3c43;          /* Secondary Label */
-            --text-muted: #8e8e93;              /* iOS System Gray */
+            --text-main: #000000;               
+            --text-secondary: #3c3c43;          
+            --text-muted: #8e8e93;              
             
-            /* NATIVE iOS TINT & LIGHT SYSTEM TRANSITION */
-            --accent: #007aff;                  /* Native iOS System Blue Tint */
-            --accent-bg: rgba(0, 122, 255, 0.1); /* Subtle Blue Fill for secondary actions */
-            --accent-glow: rgba(0, 122, 255, 0.15);
-            --border-color: rgba(0, 0, 0, 0.06);
-            --border-focus: rgba(0, 122, 255, 0.4);
+            /* INTERACTIVE iOS ACCENTS */
+            --accent: #007aff;                  
+            --accent-bg: rgba(0, 122, 255, 0.08); 
+            --accent-glow: rgba(0, 122, 255, 0.12);
+            --border-color: rgba(0, 0, 0, 0.05);
+            --border-focus: rgba(0, 122, 255, 0.35);
 
-            --success: #34c759;                 /* iOS System Green */
-            --warning: #ff9500;                 /* iOS System Orange */
-            --danger: #ff3b30;                  /* iOS System Red */
+            --success-bg: rgba(52, 199, 89, 0.1);
+            --success-text: #248a3d;
+            --warning-bg: rgba(255, 149, 0, 0.1);
+            --warning-text: #b26a00;
+            --danger-bg: rgba(255, 59, 48, 0.1);
+            --danger-text: #d32f2f;
 
-            /* Layout Architecture */
-            --sidebar-width: 290px;
+            /* Dimensions & Radius */
+            --sidebar-width: 280px;
             --top-nav-height: 64px;
-            --radius-xl: 20px;
-            --radius-lg: 14px;
-            --radius-md: 10px;
+            --radius-xl: 24px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
             
-            /* iOS Spring Curve Timing */
-            --spring-transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            /* Advanced iOS Fluid Spring Curve Animation */
+            --spring-transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.08);
         }
 
         * { 
@@ -55,10 +62,10 @@
             flex-direction: column; 
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-            letter-spacing: -0.2px;
+            letter-spacing: -0.3px;
         }
 
-        /* PREMIUM RADAR PRELOADER SYSTEM OVERLAY */
+        /* PREMIUM INSTANT LOADING SCREEN SYSTEM Overlay */
         #appPreloader {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -68,52 +75,50 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 24px;
-            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s;
+            gap: 20px;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
         }
         
         .radar-spinner {
-            width: 56px;
-            height: 56px;
+            width: 48px;
+            height: 48px;
             position: relative;
-            background: rgba(0, 122, 255, 0.02);
-            border: 1px solid var(--border-color);
+            background: rgba(0, 122, 255, 0.03);
+            border: 1.5px solid var(--border-color);
             border-radius: 50%;
         }
         .radar-spinner::after {
             content: '';
             position: absolute;
-            top: -1px; left: -1px; right: -1px; bottom: -1px;
-            border: 1px solid transparent;
+            top: -1.5px; left: -1.5px; right: -1.5px; bottom: -1.5px;
+            border: 1.5px solid transparent;
             border-top-color: var(--accent);
             border-radius: 50%;
-            animation: spinRadar 0.8s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
+            animation: spinRadar 0.7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
         }
         
         .preloader-text {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 500;
-            letter-spacing: 0.5px;
             color: var(--text-secondary);
             animation: pulseText 1.5s ease-in-out infinite;
         }
 
         #mainAppContent {
             opacity: 0;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
 
         @keyframes spinRadar { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes pulseText { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; color: var(--text-main); } }
+        @keyframes pulseText { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
 
         /* Trackless Custom Scrollbars */
         ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.1); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+        ::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.12); border-radius: 10px; }
 
         .app-container {
             display: flex;
@@ -121,13 +126,13 @@
             min-height: 100vh;
         }
         
-        /* Fixed iOS Blurred Top Bar */
+        /* Fixed Blended Glass Navigation Header */
         header { 
-            background-color: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(20px) cubic-bezier(0.16, 1, 0.3, 1);
-            -webkit-backdrop-filter: blur(20px);
+            background-color: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(20px) saturate(190%);
+            -webkit-backdrop-filter: blur(20px) saturate(190%);
             border-bottom: 1px solid var(--border-color); 
-            padding: 0 20px; 
+            padding: 0 24px; 
             display: flex; 
             align-items: center; 
             justify-content: space-between;
@@ -137,22 +142,23 @@
             z-index: 100;
         }
         header h1 { 
-            font-size: 17px; 
-            font-weight: 600; 
+            font-size: 18px; 
+            font-weight: 700; 
+            letter-spacing: -0.4px;
             color: var(--text-main); 
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .mdt-logo {
-            width: 26px;
-            height: 26px;
+            width: 28px;
+            height: 28px;
             object-fit: contain;
-            border-radius: 6px;
+            border-radius: var(--radius-sm);
         }
 
-        /* Smooth Minimalist Burger Menu Trigger */
+        /* Minimal Touch-Target Formatted Burger Toggle */
         .menu-toggle {
             background: transparent;
             border: none;
@@ -160,36 +166,37 @@
             cursor: pointer;
             display: flex;
             flex-direction: column;
-            gap: 6px;
-            padding: 8px;
+            gap: 5px;
+            padding: 12px;
+            margin-right: -12px;
             z-index: 110;
-            transition: var(--spring-transition);
         }
         .menu-toggle span {
             display: block;
-            width: 20px;
+            width: 18px;
             height: 2px;
             background-color: currentColor;
             border-radius: 1px;
             transition: var(--spring-transition);
         }
 
-        /* Navigation Structure: iOS Bottom Sheet Overlay Architecture */
+        /* iOS Bottom Sheet Modal Panel Layout Setup */
         .sidebar {
             position: fixed;
             bottom: 0; left: 0; right: 0;
             transform: translateY(100%);
             width: 100%;
             height: auto;
-            max-height: 50vh; 
-            background: rgba(255, 255, 255, 0.94);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            max-height: 45vh; 
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(30px) saturate(190%);
+            -webkit-backdrop-filter: blur(30px) saturate(190%);
             border-top: 1px solid var(--border-color);
             border-radius: var(--radius-xl) var(--radius-xl) 0 0;
             display: flex;
             flex-direction: column;
             z-index: 105;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.05);
             transition: var(--spring-transition);
             padding-bottom: env(safe-area-inset-bottom);
         }
@@ -199,10 +206,9 @@
             display: block;
             width: 36px;
             height: 5px;
-            background: var(--text-muted);
-            border-radius: 2.5px;
-            margin: 10px auto 14px auto;
-            opacity: 0.4;
+            background: rgba(0, 0, 0, 0.12);
+            border-radius: 3px;
+            margin: 12px auto 16px auto;
         }
 
         .sidebar-header {
@@ -211,7 +217,7 @@
         }
         .sidebar-header h1 {
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-main);
             display: flex;
             align-items: center;
@@ -220,28 +226,28 @@
         }
         
         .nav-menu {
-            padding: 0 20px 24px 20px;
+            padding: 0 24px 24px 24px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
         .tab-btn {
             background: var(--bg-base);
-            border: 1px solid transparent;
+            border: none;
             color: var(--text-secondary);
-            padding: 14px 18px;
-            font-size: 14px;
-            font-weight: 500;
+            padding: 15px 20px;
+            font-size: 15px;
+            font-weight: 600;
             cursor: pointer;
-            border-radius: var(--radius-lg);
+            border-radius: var(--radius-md);
             transition: var(--spring-transition);
             text-align: center;
         }
-        .tab-btn:active { transform: scale(0.98); }
+        .tab-btn:active { transform: scale(0.97); }
         .tab-btn.active { 
             background: var(--accent); 
             color: #ffffff; 
-            font-weight: 600;
+            box-shadow: 0 4px 12px var(--accent-glow);
         }
 
         .sidebar-overlay {
@@ -249,95 +255,90 @@
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.15);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             z-index: 102;
-            animation: fadeIn 0.3s ease;
+            animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .sidebar-overlay.visible { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Main Workspace Wrapper */
+        /* Workspace Core Container Setup */
         main {
             flex: 1;
             padding: 20px;
             margin-top: var(--top-nav-height);
-            margin-bottom: 90px; 
+            margin-bottom: 95px; 
             width: 100%;
         }
         
-        .tab-content { display: none; width: 100%; animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .tab-content { display: none; width: 100%; animation: slideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
         .tab-content.active { display: block; }
-        @keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(12px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        /* Layout Management */
+        /* Layout Framework Structure */
         .calculator-layout { display: flex; flex-direction: column; gap: 20px; }
+        .robbery-grid { display: flex; flex-direction: column; gap: 12px; width: 100%; }
         
-        /* FIXED VERTICAL LAYOUT FOR MOBILE PRESETS */
-        .robbery-grid { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 12px; 
-            width: 100%; 
-        }
-        
-        /* Modernized iOS Borderless Interactive Cards */
+        /* Modernized Borderless Smooth Cards */
         .card { 
             background: var(--bg-elevated); 
             border: 1px solid var(--border-color); 
             border-radius: var(--radius-lg); 
-            padding: 18px; 
+            padding: 20px; 
             display: flex; 
             flex-direction: column; 
             justify-content: space-between; 
             gap: 16px;
             width: 100%;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            box-shadow: var(--shadow-sm);
             transition: var(--spring-transition);
         }
         .card:hover {
             border-color: var(--border-focus);
-            background: #fafafa;
+            box-shadow: var(--shadow-md);
         }
-        .card h3 { font-size: 16px; font-weight: 600; color: var(--text-main); letter-spacing: -0.1px; }
-        .card-meta { font-size: 13px; color: var(--text-secondary); margin-top: 4px; font-variant-numeric: tabular-nums; }
-        .card-actions { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 14px; }
+        .card h3 { font-size: 16px; font-weight: 600; color: var(--text-main); letter-spacing: -0.2px; }
+        .card-meta { font-size: 13px; color: var(--text-secondary); margin-top: 5px; font-variant-numeric: tabular-nums; }
+        .card-actions { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(0, 0, 0, 0.03); padding-top: 14px; }
         
-        /* SOLID NATIVE iOS BLUE ACCENT BUTTON */
+        /* Pill Button Interactive System */
         .btn-add { 
             background: var(--accent); 
             border: none; 
             color: #ffffff; 
-            padding: 8px 16px; 
-            border-radius: 18px; 
+            padding: 8px 18px; 
+            border-radius: 40px; 
             font-weight: 600; 
             cursor: pointer; 
             font-size: 13px; 
+            box-shadow: 0 2px 6px var(--accent-glow);
             transition: var(--spring-transition); 
         }
-        .btn-add:hover { background: #0062cc; }
-        .btn-add:active { transform: scale(0.95); opacity: 0.85; }
+        .btn-add:hover { background: #0066d6; box-shadow: 0 4px 12px var(--accent-glow); }
+        .btn-add:active { transform: scale(0.94); opacity: 0.9; }
 
-        /* iOS Bottom Fixed Sheet Summary Bar with Premium Breathing Space */
+        /* Fixed Bottom Panel Configuration System */
         .basket-panel { 
             position: fixed;
             bottom: 0; left: 0; right: 0;
-            background: rgba(255, 255, 255, 0.85); 
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            background: rgba(255, 255, 255, 0.82); 
+            backdrop-filter: blur(24px) saturate(190%);
+            -webkit-backdrop-filter: blur(24px) saturate(190%);
             border-top: 1px solid var(--border-color); 
             border-radius: var(--radius-xl) var(--radius-xl) 0 0; 
-            padding: 16px 20px calc(24px + env(safe-area-inset-bottom)) 20px; 
+            padding: 16px 24px calc(24px + env(safe-area-inset-bottom)) 24px; 
             z-index: 101;
-            box-shadow: 0 -8px 30px rgba(0,0,0,0.06);
+            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.04);
             max-height: 72px; 
             overflow: hidden;
             transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .basket-panel.expanded {
-            max-height: 75vh;
+            max-height: 70vh;
             overflow: auto;
+            box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.08);
         }
 
         .basket-header-toggle {
@@ -345,198 +346,201 @@
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            padding-bottom: 16px;
+            padding-bottom: 20px;
         }
 
-        .basket-title { font-size: 15px; font-weight: 600; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
+        .basket-title { font-size: 16px; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px; letter-spacing: -0.3px; }
         .basket-title::after {
-            content: '• View details';
+            content: '• View Details';
             font-size: 13px;
-            color: var(--accent); /* iOS Blue Hint */
-            font-weight: 500;
+            color: var(--accent); 
+            font-weight: 600;
+            transition: var(--spring-transition);
         }
-        .basket-panel.expanded .basket-title::after { content: '• Tap to minimize'; color: var(--text-muted); }
+        .basket-panel.expanded .basket-title::after { content: '• Minimize'; color: var(--text-muted); }
 
-        .basket-items { max-height: 280px; overflow-y: auto; margin-bottom: 16px; display: none; padding: 4px 0; }
+        .basket-items { max-height: 260px; overflow-y: auto; margin-bottom: 16px; display: none; padding: 4px 0; }
         .basket-panel.expanded .basket-items { display: block; }
         
-        .basket-item { display: flex; justify-content: space-between; align-items: center; font-size: 14px; padding: 12px 0; border-bottom: 1px solid var(--border-color); }
-        .basket-item span { color: var(--text-secondary); }
+        .basket-item { display: flex; justify-content: space-between; align-items: center; font-size: 14px; padding: 14px 0; border-bottom: 1px solid var(--border-color); }
+        .basket-item span { color: var(--text-secondary); font-weight: 500; }
         .basket-item strong { color: var(--text-main); font-weight: 600; font-variant-numeric: tabular-nums; }
         
-        /* Inner Totals Card Adjustment */
-        .totals { background: var(--bg-grouped); padding: 16px; border-radius: var(--radius-lg); display: flex; flex-direction: row; flex-wrap: wrap; gap: 15px; justify-content: space-between; }
+        /* Container Setup For Totals Blocks */
+        .totals { background: var(--bg-grouped); padding: 18px; border-radius: var(--radius-lg); display: flex; flex-direction: row; flex-wrap: wrap; gap: 15px; justify-content: space-between; border: 1px solid var(--border-color); }
         .basket-panel.expanded .totals { 
             flex-direction: column; 
-            gap: 10px; 
+            gap: 12px; 
             background: var(--bg-base); 
-            margin-bottom: 12px; 
+            margin-bottom: 8px; 
         }
 
-        .total-row { display: flex; justify-content: space-between; font-size: 14px; color: var(--text-secondary); flex: 1; min-width: 100px; font-variant-numeric: tabular-nums; }
+        .total-row { display: flex; justify-content: space-between; font-size: 14px; color: var(--text-secondary); flex: 1; min-width: 100px; font-variant-numeric: tabular-nums; font-weight: 500; }
         .total-row span:last-child { color: var(--text-main); font-weight: 600; }
         .total-row.grand-total { font-size: 14px; font-weight: 600; color: var(--text-main); }
         .total-row.grand-total span:last-child { color: var(--accent); font-weight: 700; }
 
         .basket-panel.expanded .total-row { flex: none; width: 100%; }
-        .basket-panel.expanded .total-row.grand-total { margin-top: 6px; padding-top: 12px; border-top: 1px solid var(--border-color); font-size: 15px; }
-        .basket-panel.expanded .total-row.grand-total span:last-child { font-size: 17px; font-weight: 700; }
+        .basket-panel.expanded .total-row.grand-total { margin-top: 4px; padding-top: 14px; border-top: 1px solid var(--border-color); font-size: 15px; }
+        .basket-panel.expanded .total-row.grand-total span:last-child { font-size: 18px; }
 
-        /* Modernized Native Input Fields */
-        .filter-bar { display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; width: 100%; }
+        /* Integrated Form Fields Design */
+        .filter-bar { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; width: 100%; }
         
         .search-box { 
-            background: var(--bg-grouped); 
-            border: 1px solid transparent; 
+            background: rgba(0, 0, 0, 0.04); 
+            border: 1.5px solid transparent; 
             padding: 12px 16px; 
             border-radius: var(--radius-md); 
             color: var(--text-main); 
             width: 100%; 
-            font-size: 15px; 
+            font-size: 16px; 
+            font-weight: 500;
             transition: var(--spring-transition); 
         }
-        .search-box:focus { outline: none; border-color: var(--border-focus); background: var(--bg-elevated); }
+        .search-box:focus { outline: none; border-color: var(--border-focus); background: var(--bg-elevated); box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.05); }
         .search-box::placeholder { color: var(--text-muted); }
 
-        /* HORIZONTAL SCROLL ONLY FOR CATEGORY FILTER BUTTONS ON MOBILE */
-        .filter-buttons-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; width: 100%; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+        /* Inline Scroll Scoping System */
+        .filter-buttons-scroll { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0; width: 100%; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
         .filter-buttons-scroll::-webkit-scrollbar { display: none; }
         
         .filter-btn { 
-            background: var(--bg-grouped); 
+            background: rgba(0, 0, 0, 0.04); 
             border: none; 
             color: var(--text-secondary); 
             padding: 8px 16px; 
             border-radius: var(--radius-md); 
             cursor: pointer; 
-            font-size: 13px; 
-            font-weight: 500; 
+            font-size: 14px; 
+            font-weight: 600; 
             white-space: nowrap; 
             transition: var(--spring-transition); 
         }
-        .filter-btn:hover { color: var(--text-main); }
-        /* BLUE ACTIVE TINT FOR FILTERS */
-        .filter-btn.active { background: var(--accent); color: #ffffff; font-weight: 600; }
+        .filter-btn:hover { color: var(--text-main); background: rgba(0, 0, 0, 0.07); }
+        .filter-btn.active { background: var(--accent); color: #ffffff; box-shadow: 0 2px 8px var(--accent-glow); }
 
-        /* Structured Grouped List System WITH RESPONSIVE OVERFLOW HORIZONTAL SCROLL FOR TABLE DATA */
+        /* Structured Matrix/Table Scoping Base Elements */
         .table-container { 
             width: 100%; 
             overflow-x: auto; 
             -webkit-overflow-scrolling: touch;
             border-radius: var(--radius-lg);
             border: 1px solid var(--border-color);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
+            box-shadow: var(--shadow-sm);
         }
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; min-width: 700px; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; min-width: 750px; }
         
-        /* Premium Native Subheadings */
         th { 
-            background: #fafafa;
+            background: var(--bg-elevated);
             color: var(--text-muted); 
-            padding: 12px 16px; 
-            font-weight: 500; 
+            padding: 14px 20px; 
+            font-weight: 600; 
             text-transform: uppercase; 
             font-size: 11px; 
-            letter-spacing: 0.3px; 
+            letter-spacing: 0.5px; 
             border-bottom: 1px solid var(--border-color);
         }
         
-        /* Table Rows modeled after iOS Grouped Table Rows */
         tbody tr { 
             background: var(--bg-elevated);
             transition: var(--spring-transition);
         }
         
         td { 
-            padding: 16px; 
+            padding: 18px 20px; 
             border-bottom: 1px solid var(--border-color); 
             color: var(--text-secondary); 
             vertical-align: top; 
-            line-height: 1.4; 
+            line-height: 1.5; 
         }
         tr:last-child td { border-bottom: none; }
-        tr:hover td { background: #f9f9fb; }
+        tr:hover td { background: var(--bg-grouped); }
         
-        /* Minimalist Subtle Status Badges */
+        /* Dynamic Multi-State Pills Structure Layout mapping */
         .badge { 
             display: inline-block; 
             padding: 4px 10px; 
-            border-radius: 6px; 
+            border-radius: 8px; 
             font-size: 12px; 
-            font-weight: 500; 
+            font-weight: 600; 
             background: var(--accent-bg);
             color: var(--accent);
+            text-transform: capitalize;
         }
 
-        /* Responsive Mechanics for Burger Animation States */
-        .menu-toggle.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-        .menu-toggle.open span:nth-child(2) { opacity: 0; transform: scale(0); }
-        .menu-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        /* Native Colored Context Scopes mapping dynamic variables */
+        .badge.traffic, .badge.infraction { background: var(--warning-bg); color: var(--warning-text); }
+        .badge.misdemeanor { background: var(--accent-bg); color: var(--accent); }
+        .badge.felony, .badge.hut { background: var(--danger-bg); color: var(--danger-text); }
 
-        /* DESKTOP WORKSPACE VIEWPORT RECONFIGURATION (>= 992px) */
+        /* Animation States Configuration Hooks */
+        .menu-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); width: 20px; }
+        .menu-toggle.open span:nth-child(2) { opacity: 0; transform: scale(0); }
+        .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); width: 20px; }
+
+        /* DESKTOP INTEGRATED WORKSPACE RECONFIGURATION LAYER (>= 992px) */
         @media (min-width: 992px) {
             header { display: none; }
             .menu-toggle { display: none; }
             .sidebar-overlay { display: none !important; }
 
-            /* Reconfigure Side Navbar to a permanent sleek left dashboard bar */
             .sidebar { 
                 top: 0; bottom: 0; left: 0 !important; right: auto;
                 transform: none !important; width: var(--sidebar-width); height: 100vh;
                 max-height: none; border-top: none; border-right: 1px solid var(--border-color);
                 border-radius: 0; background: var(--bg-elevated); padding: 0;
+                box-shadow: none;
             }
             .sidebar::before { display: none; }
-            .sidebar-header { display: block; padding: 32px 24px; text-align: left; }
-            .sidebar-header h1 { font-size: 20px; justify-content: flex-start; letter-spacing: -0.3px; }
-            .mdt-logo { width: 30px; height: 30px; }
+            .sidebar-header { display: block; padding: 36px 28px 24px 28px; text-align: left; }
+            .sidebar-header h1 { font-size: 22px; justify-content: flex-start; letter-spacing: -0.5px; }
+            .mdt-logo { width: 32px; height: 32px; }
 
-            .nav-menu { padding: 10px 16px; gap: 6px; flex: 1; }
-            .tab-btn { background: transparent; padding: 12px 16px; font-size: 14px; text-align: left; border-radius: var(--radius-md); }
-            .tab-btn:hover { color: var(--accent); background: var(--bg-base); }
-            .tab-btn.active { background: var(--bg-base); color: var(--accent); }
+            .nav-menu { padding: 10px 18px; gap: 8px; flex: 1; }
+            .tab-btn { background: transparent; padding: 12px 18px; font-size: 15px; text-align: left; border-radius: var(--radius-md); color: var(--text-secondary); }
+            .tab-btn:hover { color: var(--text-main); background: var(--bg-base); }
+            .tab-btn.active { background: var(--bg-base); color: var(--accent); box-shadow: none; }
 
             main { margin-left: var(--sidebar-width); margin-top: 0; padding: 48px; margin-bottom: 0; width: calc(100% - var(--sidebar-width)); }
 
-            .calculator-layout { display: grid; grid-template-columns: 1fr 380px; gap: 32px; align-items: start; }
+            .calculator-layout { display: grid; grid-template-columns: 1fr 400px; gap: 32px; align-items: start; }
+            .robbery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
             
-            /* Revert vertical flow to multi-column desktop matrix grid layout */
-            .robbery-grid { 
-                display: grid; 
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-                gap: 16px; 
-            }
-            
-            /* Reposition summary sheet block into a clean matching card block */
             .basket-panel { 
                 position: sticky; top: 48px; left: auto; right: auto; bottom: auto;
                 max-height: none !important; border-top: none; border: 1px solid var(--border-color);
                 border-radius: var(--radius-lg); padding: 24px; overflow: visible;
-                background: var(--bg-elevated); box-shadow: 0 4px 20px rgba(0,0,0,0.01);
+                background: var(--bg-elevated); box-shadow: var(--shadow-sm);
             }
-            .basket-header-toggle { cursor: default; pointer-events: none; padding-bottom: 20px; }
-            .basket-title { font-size: 16px; }
+            .basket-header-toggle { cursor: default; pointer-events: none; padding-bottom: 24px; }
+            .basket-title { font-size: 18px; }
             .basket-title::after { display: none; }
-            .basket-items { display: block; max-height: calc(100vh - 300px); }
-            .totals { background: var(--bg-base); padding: 18px; border-radius: var(--radius-md); display: flex; flex-direction: column; gap: 10px; }
+            .basket-items { display: block; max-height: calc(100vh - 340px); }
+            .totals { background: var(--bg-grouped); padding: 20px; border-radius: var(--radius-md); display: flex; flex-direction: column; gap: 12px; }
             .totals { margin-bottom: 0 !important; }
-            .total-row { flex: none; width: 100%; font-size: 13px; }
-            .total-row.grand-total { margin-top: 6px; padding-top: 12px; border-top: 1px solid var(--border-color); font-size: 14px; }
-            .total-row.grand-total span:last-child { font-size: 16px; }
+            .total-row { flex: none; width: 100%; font-size: 14px; }
+            .total-row.grand-total { margin-top: 4px; padding-top: 14px; border-top: 1px solid var(--border-color); font-size: 15px; }
+            .total-row.grand-total span:last-child { font-size: 18px; }
             
-            .filter-bar { flex-direction: row; align-items: center; justify-content: space-between; gap: 20px; }
-            .search-box { width: 320px; }
-            .filter-buttons-scroll { width: auto; padding-bottom: 0; }
+            .filter-bar { flex-direction: row; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 32px; }
+            .search-box { width: 340px; margin-bottom: 0; }
+            .filter-buttons-scroll { width: auto; padding: 0; }
+            
+            th { padding: 16px 24px; }
+            td { padding: 20px 24px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- VISUAL PRELOADER SCREEN OVERLAY CONTAINER -->
     <div id="appPreloader">
         <div class="radar-spinner"></div>
         <div class="preloader-text" id="preloaderText">Syncing secure data nodes...</div>
     </div>
 
+    <!-- MAIN APPLICATION CONTAINER WRAPPER -->
     <div id="mainAppContent">
         <div class="app-container">
             <header>
@@ -566,16 +570,18 @@
             </nav>
 
             <main>
+                <!-- Charge Sheet Tab Panel -->
                 <div id="charge-sheet" class="tab-content active">
                     <div class="calculator-layout">
                         <div class="robbery-grid" id="robberyGrid"></div>
 
+                        <!-- Optimized Booking Summary Bottom Sheet System -->
                         <div class="basket-panel" id="summaryPanel">
                             <div class="basket-header-toggle" onclick="toggleSummaryPanel()">
                                 <div class="basket-title">Booking Summary</div>
                             </div>
                             <div class="basket-items" id="basketItems">
-                                <p style="color: var(--text-muted); font-size: 13px; text-align: center; padding-top: 30px;">No operational presets loaded</p>
+                                <p style="color: var(--text-muted); font-size: 14px; text-align: center; padding: 40px 0;">No operational presets loaded</p>
                             </div>
                             <div class="totals">
                                 <div class="total-row"><span>Fine</span><span id="summaryFine">$0</span></div>
@@ -586,6 +592,7 @@
                     </div>
                 </div>
 
+                <!-- Penal Codes Tab Panel -->
                 <div id="penal-codes" class="tab-content">
                     <div class="filter-bar">
                         <input type="text" id="searchBox" class="search-box" placeholder="Search parameters or data metrics..." oninput="filterTable()">
@@ -771,9 +778,9 @@
                 let jailDisplay = item.jailTime === 999999 || item.jailTime === 9999999 || item.jailTime === 99999999 ? "H.U.T" : `${item.jailTime} Mos`;
 
                 tr.innerHTML = `
-                    <td style="font-weight:600; color:var(--text-main)">${item.label}</td>
-                    <td><span class="badge">${readableCategory}</span></td>
-                    <td>${item.description}</td>
+                    <td style="font-weight:600; color:var(--text-main); font-size:15px; letter-spacing:-0.2px;">${item.label}</td>
+                    <td><span class="badge ${item.category}">${readableCategory}</span></td>
+                    <td style="font-size:13.5px; line-height:1.5;">${item.description}</td>
                     <td style="font-weight:600; color:${item.fine === 999999 ? 'var(--text-muted)' : 'var(--text-main)'}">${fineDisplay}</td>
                     <td style="font-weight:600; color:var(--text-main)">${jailDisplay}</td>
                 `;
