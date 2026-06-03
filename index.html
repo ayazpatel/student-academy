@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="./assets/logo.png">
     <style>
         :root {
-            /* PURE PREMIUM iOS LIGHT PALETTE (San Francisco Display Architecture) */
+            /* PURE PREMIUM iOS LIGHT PALETTE */
             --bg-base: #f2f2f7;                 
             --bg-elevated: #ffffff;             
             --bg-grouped: #f9f9fb;              
@@ -39,7 +39,7 @@
             --radius-md: 12px;
             --radius-sm: 8px;
             
-            /* High-Performance Fluid iOS Curve System */
+            /* Fluid iOS Curve Transitions */
             --spring-transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.03);
             --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.04);
@@ -115,18 +115,13 @@
         @keyframes spinRadar { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes pulseText { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
 
-        /* Trackless Custom Scrollbars */
-        ::-webkit-scrollbar { width: 5px; height: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.12); border-radius: 10px; }
-
         .app-container {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
         
-        /* Fixed Translucent iOS Navigation Header Bar */
+        /* Fixed Translucent iOS Header Bar */
         header { 
             background-color: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(20px) saturate(190%);
@@ -158,7 +153,6 @@
             border-radius: var(--radius-sm);
         }
 
-        /* Minimal Touch-Target Formatted Burger Toggle */
         .menu-toggle {
             background: transparent;
             border: none;
@@ -180,14 +174,14 @@
             transition: var(--spring-transition);
         }
 
-        /* Navigation Drawer Panel Layout Framework */
+        /* Navigation Drawer Layout Framework */
         .sidebar {
             position: fixed;
             bottom: 0; left: 0; right: 0;
             transform: translateY(100%);
             width: 100%;
             height: auto;
-            max-height: 45vh; 
+            max-height: 55vh; 
             background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(30px) saturate(190%);
             -webkit-backdrop-filter: blur(30px) saturate(190%);
@@ -215,15 +209,6 @@
             padding: 0 24px 16px 24px;
             text-align: center;
         }
-        .sidebar-header h1 {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
         
         .nav-menu {
             padding: 0 24px 24px 24px;
@@ -242,8 +227,23 @@
             border-radius: var(--radius-md);
             transition: var(--spring-transition);
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
-        .tab-btn:active { transform: scale(0.97); }
+        .tab-btn .badge-count {
+            background: rgba(0, 0, 0, 0.1);
+            color: var(--text-main);
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+        .tab-btn.active .badge-count {
+            background: #ffffff;
+            color: var(--accent);
+        }
         .tab-btn.active { 
             background: var(--accent); 
             color: #ffffff; 
@@ -261,14 +261,13 @@
             animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .sidebar-overlay.visible { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Workspace Core Wrapper */
+        /* Workspace Setup */
         main {
             flex: 1;
             padding: 24px 20px;
             margin-top: var(--top-nav-height);
-            margin-bottom: 105px; 
+            margin-bottom: 95px; 
             width: 100%;
         }
         
@@ -276,11 +275,9 @@
         .tab-content.active { display: block; }
         @keyframes slideUp { from { transform: translateY(12px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        /* Layout Framework Structure */
-        .calculator-layout { display: flex; flex-direction: column; gap: 20px; }
         .robbery-grid { display: flex; flex-direction: column; gap: 12px; width: 100%; }
         
-        /* Modernized Borderless Highly Interactive Action Cards */
+        /* Modernized Cards System */
         .card { 
             background: var(--bg-elevated); 
             border: 1px solid var(--border-color); 
@@ -290,21 +287,16 @@
             flex-direction: column; 
             justify-content: space-between; 
             gap: 16px;
-            width: 100%;
             box-shadow: var(--shadow-sm);
             transition: var(--spring-transition);
         }
-        .card:hover {
-            border-color: var(--border-focus);
-            box-shadow: var(--shadow-md);
-            transform: translateY(-1px);
-        }
+        .card:hover { border-color: var(--border-focus); box-shadow: var(--shadow-md); }
         .card h3 { font-size: 16px; font-weight: 600; color: var(--text-main); letter-spacing: -0.2px; }
         .card-meta { font-size: 13px; color: var(--text-secondary); margin-top: 5px; font-variant-numeric: tabular-nums; }
         .card-actions { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(0, 0, 0, 0.03); padding-top: 14px; }
         
-        /* Pill Button Interactive Layout Elements */
-        .btn-add { 
+        /* Native iOS Buttons */
+        .btn-add, .btn-action-cart { 
             background: var(--accent); 
             border: none; 
             color: #ffffff; 
@@ -316,78 +308,78 @@
             box-shadow: 0 2px 6px var(--accent-glow);
             transition: var(--spring-transition); 
         }
-        .btn-add:hover { background: #0066d6; box-shadow: 0 4px 12px var(--accent-glow); }
-        .btn-add:active { transform: scale(0.94); opacity: 0.9; }
+        .btn-add:hover, .btn-action-cart:hover { background: #0066d6; }
+        .btn-add:active, .btn-action-cart:active { transform: scale(0.94); }
 
-        /* Fixed Bottom Panel Configuration System with Premium Breathing Space */
-        .basket-panel { 
+        .btn-action-cart.remove {
+            background: var(--danger-bg);
+            color: var(--danger-text);
+            box-shadow: none;
+        }
+        .btn-action-cart.remove:hover { background: rgba(255, 59, 48, 0.2); }
+
+        /* FIXED FLOATING BOOKING OVERLAY TO INSTANTLY JUMP PAGES */
+        .floating-summary-trigger {
             position: fixed;
-            bottom: 0; left: 0; right: 0;
-            background: rgba(255, 255, 255, 0.82); 
-            backdrop-filter: blur(24px) saturate(190%);
-            -webkit-backdrop-filter: blur(24px) saturate(190%);
-            border-top: 1px solid var(--border-color); 
-            border-radius: var(--radius-xl) var(--radius-xl) 0 0; 
-            padding: 16px 24px calc(24px + env(safe-area-inset-bottom)) 24px; 
-            z-index: 101;
-            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.04);
-            max-height: 72px; 
-            overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .basket-panel.expanded {
-            max-height: 70vh;
-            overflow: auto;
-            box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.08);
-        }
-
-        .basket-header-toggle {
+            bottom: 24px; left: 20px; right: 20px;
+            background: var(--text-main);
+            color: var(--bg-elevated);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-lg);
             cursor: pointer;
-            padding-bottom: 20px;
-        }
-
-        .basket-title { font-size: 16px; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px; letter-spacing: -0.3px; }
-        .basket-title::after {
-            content: '• View Details';
-            font-size: 13px;
-            color: var(--accent); 
-            font-weight: 600;
+            z-index: 99;
+            transform: translateY(150%);
+            opacity: 0;
             transition: var(--spring-transition);
         }
-        .basket-panel.expanded .basket-title::after { content: '• Minimize'; color: var(--text-muted); }
+        .floating-summary-trigger.visible { transform: translateY(0); opacity: 1; }
+        .floating-summary-trigger:active { transform: scale(0.98); }
+        .floating-summary-trigger .title-label { font-weight: 600; font-size: 15px; }
+        .floating-summary-trigger .action-badge { background: var(--accent); color: white; padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 700; }
 
-        .basket-items { max-height: 260px; overflow-y: auto; margin-bottom: 16px; display: none; padding: 4px 0; }
-        .basket-panel.expanded .basket-items { display: block; }
-        
-        .basket-item { display: flex; justify-content: space-between; align-items: center; font-size: 14px; padding: 14px 0; border-bottom: 1px solid var(--border-color); }
-        .basket-item span { color: var(--text-secondary); font-weight: 500; }
-        .basket-item strong { color: var(--text-main); font-weight: 600; font-variant-numeric: tabular-nums; }
-        
-        /* Container Setup For Summary Cards */
-        .totals { background: var(--bg-grouped); padding: 18px; border-radius: var(--radius-lg); display: flex; flex-direction: row; flex-wrap: wrap; gap: 15px; justify-content: space-between; border: 1px solid var(--border-color); }
-        .basket-panel.expanded .totals { 
-            flex-direction: column; 
-            gap: 12px; 
-            background: var(--bg-base); 
-            margin-bottom: 8px; 
+        /* IMMERSIVE BOOKING SUMMARY WORKSPACE WORK SHEET */
+        .booking-workspace-container { display: flex; flex-direction: column; gap: 20px; }
+        .summary-headline-card { background: var(--bg-elevated); padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
+        .summary-headline-card h2 { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 6px; }
+        .summary-headline-card p { font-size: 14px; color: var(--text-secondary); }
+
+        .summary-items-list { display: flex; flex-direction: column; gap: 10px; }
+        .summary-item-row { 
+            background: var(--bg-elevated); 
+            border: 1px solid var(--border-color); 
+            padding: 16px 20px; 
+            border-radius: var(--radius-md); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            box-shadow: var(--shadow-sm);
         }
-
-        .total-row { display: flex; justify-content: space-between; font-size: 14px; color: var(--text-secondary); flex: 1; min-width: 100px; font-variant-numeric: tabular-nums; font-weight: 500; }
-        .total-row span:last-child { color: var(--text-main); font-weight: 600; }
-        .total-row.grand-total { font-size: 14px; font-weight: 600; color: var(--text-main); }
-        .total-row.grand-total span:last-child { color: var(--accent); font-weight: 700; }
-
-        .basket-panel.expanded .total-row { flex: none; width: 100%; }
-        .basket-panel.expanded .total-row.grand-total { margin-top: 4px; padding-top: 14px; border-top: 1px solid var(--border-color); font-size: 15px; }
-        .basket-panel.expanded .total-row.grand-total span:last-child { font-size: 18px; }
-
-        /* Modernized Form Filter Elements Layout System */
-        .filter-bar { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; width: 100%; }
+        .summary-item-row .details-pane h4 { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+        .summary-item-row .details-pane p { font-size: 13px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
         
+        .summary-aggregated-box { 
+            background: var(--bg-elevated); 
+            border: 1px solid var(--border-color); 
+            border-radius: var(--radius-lg); 
+            padding: 24px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 14px;
+            box-shadow: var(--shadow-md);
+        }
+        .meta-summary-row { display: flex; justify-content: space-between; font-size: 15px; font-weight: 500; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+        .meta-summary-row.total-bold { font-size: 18px; font-weight: 700; color: var(--text-main); border-top: 1px solid var(--border-color); padding-top: 14px; margin-top: 4px; }
+        .meta-summary-row.total-bold span:last-child { color: var(--accent); }
+
+        .btn-clear-all { background: transparent; border: none; color: var(--danger-text); font-size: 14px; font-weight: 600; cursor: pointer; padding: 4px 0; text-align: left; width: max-content; }
+        .btn-clear-all:hover { opacity: 0.8; }
+
+        /* Integrated Input Fields System */
+        .filter-bar { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; width: 100%; }
         .search-box { 
             background: rgba(0, 0, 0, 0.04); 
             border: 1.5px solid transparent; 
@@ -402,7 +394,6 @@
         .search-box:focus { outline: none; border-color: var(--border-focus); background: var(--bg-elevated); box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.05); }
         .search-box::placeholder { color: var(--text-muted); }
 
-        /* Scrollable Category Filter List Configuration */
         .filter-buttons-scroll { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0; width: 100%; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
         .filter-buttons-scroll::-webkit-scrollbar { display: none; }
         
@@ -421,7 +412,7 @@
         .filter-btn:hover { color: var(--text-main); background: rgba(0, 0, 0, 0.07); }
         .filter-btn.active { background: var(--accent); color: #ffffff; box-shadow: 0 2px 8px var(--accent-glow); }
 
-        /* Highly-Readable Clean Table Directory Matrix System */
+        /* Directory Matrix Table Infrastructure */
         .table-container { 
             width: 100%; 
             overflow-x: auto; 
@@ -430,69 +421,35 @@
             border: 1px solid var(--border-color);
             box-shadow: var(--shadow-sm);
         }
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; min-width: 800px; }
-        
-        th { 
-            background: var(--bg-elevated);
-            color: var(--text-muted); 
-            padding: 14px 20px; 
-            font-weight: 600; 
-            text-transform: uppercase; 
-            font-size: 11px; 
-            letter-spacing: 0.5px; 
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        tbody tr { 
-            background: var(--bg-elevated);
-            transition: var(--spring-transition);
-        }
-        
-        td { 
-            padding: 18px 20px; 
-            border-bottom: 1px solid var(--border-color); 
-            color: var(--text-secondary); 
-            vertical-align: top; 
-            line-height: 1.5; 
-        }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; min-width: 850px; }
+        th { background: var(--bg-elevated); color: var(--text-muted); padding: 14px 20px; font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; border-bottom: 1px solid var(--border-color); }
+        tbody tr { background: var(--bg-elevated); transition: var(--spring-transition); }
+        td { padding: 18px 20px; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); vertical-align: middle; line-height: 1.5; }
         tr:last-child td { border-bottom: none; }
         tr:hover td { background: var(--bg-grouped); }
         
-        /* Modern High-Contrast Dynamic Legal Badge System */
-        .badge { 
-            display: inline-block; 
-            padding: 4px 10px; 
-            border-radius: 8px; 
-            font-size: 12px; 
-            font-weight: 600; 
-            background: var(--accent-bg);
-            color: var(--accent);
-            text-transform: capitalize;
-        }
-
-        /* Context-Driven Theme Overrides */
+        /* Badges Architecture */
+        .badge { display: inline-block; padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; background: var(--accent-bg); color: var(--accent); text-transform: capitalize; }
         .badge.traffic, .badge.infraction { background: var(--warning-bg); color: var(--warning-text); }
         .badge.misdemeanor { background: var(--accent-bg); color: var(--accent); }
         .badge.felony, .badge.hut { background: var(--danger-bg); color: var(--danger-text); }
 
-        /* Drawer Toggle State Transforms */
         .menu-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); width: 20px; }
         .menu-toggle.open span:nth-child(2) { opacity: 0; transform: scale(0); }
         .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); width: 20px; }
 
-        /* WIDESCREEN DESKTOP SYSTEM OVERRIDES (>= 992px) */
+        /* WIDESCREEN DESKTOP SYSTEM WORKSPACE PANELS (>= 992px) */
         @media (min-width: 992px) {
             header { display: none; }
             .menu-toggle { display: none; }
             .sidebar-overlay { display: none !important; }
+            .floating-summary-trigger { display: none !important; }
 
-            /* Revert Side Navbar panel configuration into standard persistent dashboard layer */
             .sidebar { 
                 top: 0; bottom: 0; left: 0 !important; right: auto;
                 transform: none !important; width: var(--sidebar-width); height: 100vh;
                 max-height: none; border-top: none; border-right: 1px solid var(--border-color);
-                border-radius: 0; background: var(--bg-elevated); padding: 0;
-                box-shadow: none;
+                border-radius: 0; background: var(--bg-elevated); padding: 0; box-shadow: none;
             }
             .sidebar::before { display: none; }
             .sidebar-header { display: block; padding: 36px 28px 24px 28px; text-align: left; }
@@ -500,32 +457,17 @@
             .mdt-logo { width: 32px; height: 32px; }
 
             .nav-menu { padding: 10px 18px; gap: 8px; flex: 1; }
-            .tab-btn { background: transparent; padding: 12px 18px; font-size: 15px; text-align: left; border-radius: var(--radius-md); color: var(--text-secondary); }
+            .tab-btn { background: transparent; padding: 12px 18px; font-size: 15px; text-align: left; border-radius: var(--radius-md); color: var(--text-secondary); justify-content: space-between; }
             .tab-btn:hover { color: var(--text-main); background: var(--bg-base); }
             .tab-btn.active { background: var(--bg-base); color: var(--accent); box-shadow: none; }
+            .tab-btn .badge-count { background: var(--bg-pill); color: var(--text-main); }
+            .tab-btn.active .badge-count { background: var(--accent); color: white; }
 
             main { margin-left: var(--sidebar-width); margin-top: 0; padding: 48px; margin-bottom: 0; width: calc(100% - var(--sidebar-width)); }
-
-            .calculator-layout { display: grid; grid-template-columns: 1fr 400px; gap: 32px; align-items: start; }
             .robbery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
             
-            /* Reposition Summary Panel setup to form side matching component module blocks */
-            .basket-panel { 
-                position: sticky; top: 48px; left: auto; right: auto; bottom: auto;
-                max-height: none !important; border-top: none; border: 1px solid var(--border-color);
-                border-radius: var(--radius-lg); padding: 24px; overflow: visible;
-                background: var(--bg-elevated); box-shadow: var(--shadow-sm);
-            }
-            .basket-header-toggle { cursor: default; pointer-events: none; padding-bottom: 24px; }
-            .basket-title { font-size: 18px; }
-            .basket-title::after { display: none; }
-            .basket-items { display: block; max-height: calc(100vh - 340px); }
-            .totals { background: var(--bg-grouped); padding: 20px; border-radius: var(--radius-md); display: flex; flex-direction: column; gap: 12px; }
-            .totals { margin-bottom: 0 !important; }
-            .total-row { flex: none; width: 100%; font-size: 14px; }
-            .total-row.grand-total { margin-top: 4px; padding-top: 14px; border-top: 1px solid var(--border-color); font-size: 15px; }
-            .total-row.grand-total span:last-child { font-size: 18px; }
-            
+            .booking-workspace-container { display: grid; grid-template-columns: 1fr 400px; gap: 32px; align-items: start; }
+
             .filter-bar { flex-direction: row; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 32px; }
             .search-box { width: 340px; margin-bottom: 0; }
             .filter-buttons-scroll { width: auto; padding: 0; }
@@ -537,13 +479,13 @@
 </head>
 <body>
 
-    <!-- VISUAL PRELOADER SCREEN OVERLAY CONTAINER -->
+    <!-- INSTANT PRELOADER -->
     <div id="appPreloader">
         <div class="radar-spinner"></div>
         <div class="preloader-text" id="preloaderText">Syncing secure data nodes...</div>
     </div>
 
-    <!-- MAIN APPLICATION CONTAINER WRAPPER -->
+    <!-- MAIN APP WRAPPER -->
     <div id="mainAppContent">
         <div class="app-container">
             <header>
@@ -551,7 +493,7 @@
                     <img src="./assets/logo.png" alt="MDT Logo" class="mdt-logo">
                     Virtual MDT
                 </h1>
-                <button class="menu-toggle" id="menuToggle" onclick="toggleSidebar()" aria-label="Toggle Navigation Drawer">
+                <button class="menu-toggle" id="menuToggle" onclick="toggleSidebar()">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -559,6 +501,7 @@
             </header>
 
             <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+            
             <nav class="sidebar" id="sidebarMenu">
                 <div class="sidebar-header">
                     <h1>
@@ -567,35 +510,21 @@
                     </h1>
                 </div>
                 <div class="nav-menu">
-                    <button class="tab-btn active" onclick="switchTab('charge-sheet')">Charge Sheet</button>
-                    <button class="tab-btn" onclick="switchTab('penal-codes')">Penal Codes Directory</button>
+                    <button class="tab-btn active" id="btn-tab-charge-sheet" onclick="switchTab('charge-sheet')">Charge Sheet</button>
+                    <button class="tab-btn" id="btn-tab-penal-codes" onclick="switchTab('penal-codes')">Penal Codes Directory</button>
+                    <button class="tab-btn" id="btn-tab-booking-summary" onclick="switchTab('booking-summary')">
+                        Booking Workspace <span class="badge-count" id="globalCartBadge">0</span>
+                    </button>
                 </div>
             </nav>
 
             <main>
-                <!-- Charge Sheet Tab Panel -->
+                <!-- TAB 1: CHARGE SHEET -->
                 <div id="charge-sheet" class="tab-content active">
-                    <div class="calculator-layout">
-                        <div class="robbery-grid" id="robberyGrid"></div>
-
-                        <!-- Optimized Booking Summary Bottom Sheet System -->
-                        <div class="basket-panel" id="summaryPanel">
-                            <div class="basket-header-toggle" onclick="toggleSummaryPanel()">
-                                <div class="basket-title">Booking Summary</div>
-                            </div>
-                            <div class="basket-items" id="basketItems">
-                                <p style="color: var(--text-muted); font-size: 14px; text-align: center; padding: 40px 0;">No operational presets loaded</p>
-                            </div>
-                            <div class="totals">
-                                <div class="total-row"><span>Fine</span><span id="summaryFine">$0</span></div>
-                                <div class="total-row"><span>Time</span><span id="summaryTime">0 Months</span></div>
-                                <div class="total-row grand-total"><span>System Cap</span><span id="summaryCap">N/A</span></div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="robbery-grid" id="robberyGrid"></div>
                 </div>
 
-                <!-- Penal Codes Tab Panel -->
+                <!-- TAB 2: PENAL CODES DIRECTORY -->
                 <div id="penal-codes" class="tab-content">
                     <div class="filter-bar">
                         <input type="text" id="searchBox" class="search-box" placeholder="Search parameters or data metrics..." oninput="filterTable()">
@@ -616,20 +545,51 @@
                                 <tr>
                                     <th style="width: 25%">Offense</th>
                                     <th style="width: 15%">Classification</th>
-                                    <th style="width: 42%">Statutory Definition</th>
+                                    <th style="width: 40%">Statutory Definition</th>
                                     <th style="width: 10%">Fine</th>
-                                    <th style="width: 8%">Jail Metric</th>
+                                    <th style="width: 5%">Jail Metric</th>
+                                    <th style="width: 5%; text-align: center;">Action</th>
                                 </tr>
                             </thead>
                             <tbody id="penalCodesTableBody">
                                 <tr>
-                                    <td colspan="5" style="color: var(--text-muted); font-size: 13px; text-align: center; padding: 30px 0;">Loading legal code indexes...</td>
+                                    <td colspan="6" style="color: var(--text-muted); font-size: 13px; text-align: center; padding: 30px 0;">Loading legal code indexes...</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
+
+                <!-- TAB 3: IMMERSIVE DEDICATED BOOKING WORKSPACE -->
+                <div id="booking-summary" class="tab-content">
+                    <div class="booking-workspace-container">
+                        <div style="display: flex; flex-direction: column; gap: 16px;">
+                            <div class="summary-headline-card">
+                                <h2>Booking Work Sheet</h2>
+                                <p>Review selected criminal presets, singular infractions, and institutional fine metrics below.</p>
+                                <button class="btn-clear-all" onclick="clearGlobalCart()">Clear All Selected Codes</button>
+                            </div>
+                            <div class="summary-items-list" id="workspaceCartItems">
+                                <!-- Dynamic Additions Inject Here -->
+                            </div>
+                        </div>
+
+                        <div class="summary-aggregated-box">
+                            <h3 style="font-size: 16px; font-weight: 700;">Financial & Jail Run Totals</h3>
+                            <div class="meta-summary-row"><span>Accumulated Fine</span><span id="boxFine">$0</span></div>
+                            <div class="meta-summary-row"><span>Accumulated Time</span><span id="boxTime">0 Months</span></div>
+                            <div class="meta-summary-row total-bold"><span>Total Adjusted Booking</span><span id="boxGrandTotal">$0</span></div>
+                        </div>
+                    </div>
+                </div>
             </main>
+
+            <!-- FLOATING MOBILE CART TRIGGER QUICK JUMP -->
+            <div class="floating-summary-trigger" id="floatingSummaryBar" onclick="switchTab('booking-summary')">
+                <span class="title-label">View Dynamic Booking Summary</span>
+                <span class="action-badge" id="floatingCartBadge">0</span>
+            </div>
+
         </div>
     </div>
 
@@ -637,6 +597,9 @@
         let chargeSheetGroups = {};
         let penalCodes = {};
         let currentCategoryFilter = 'all';
+        
+        // GLOBAL CART STORAGE SYSTEM ENGINE
+        let globalCart = [];
 
         const getBaseUrl = () => {
             if (window.location.hostname.includes("github.io")) {
@@ -647,30 +610,26 @@
 
         window.onload = async function() {
             const baseUrl = getBaseUrl();
-            
             try {
                 const [chargesResponse, penalCodesResponse] = await Promise.all([
                     fetch(`${baseUrl}chargesPresets.json`),
                     fetch(`${baseUrl}penalCodes.json`)
                 ]);
 
-                if (!chargesResponse.ok || !penalCodesResponse.ok) {
-                    throw new Error("HTTP verification failed.");
-                }
+                if (!chargesResponse.ok || !penalCodesResponse.ok) throw new Error("HTTP verification failed.");
 
                 chargeSheetGroups = await chargesResponse.json();
                 penalCodes = await penalCodesResponse.json();
 
                 renderChargeSheetGrid();
                 renderPenalCodesTable();
+                updateCartUI();
 
                 const preloader = document.getElementById('appPreloader');
                 const content = document.getElementById('mainAppContent');
-                
                 preloader.style.opacity = '0';
                 preloader.style.visibility = 'hidden';
                 content.style.opacity = '1';
-
             } catch (error) {
                 console.error("Data Fetch Error:", error);
                 document.getElementById('preloaderText').innerText = `Sync Failed: ${error.message}`;
@@ -679,37 +638,24 @@
         };
 
         function toggleSidebar() {
-            const sidebar = document.getElementById('sidebarMenu');
-            const overlay = document.getElementById('sidebarOverlay');
-            const toggleBtn = document.getElementById('menuToggle');
-            
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('visible');
-            toggleBtn.classList.toggle('open');
-        }
-
-        function toggleSummaryPanel() {
-            if (window.innerWidth >= 992) return; 
-            const panel = document.getElementById('summaryPanel');
-            panel.classList.toggle('expanded');
+            document.getElementById('sidebarMenu').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('visible');
+            document.getElementById('menuToggle').classList.toggle('open');
         }
 
         function switchTab(tabId) {
             const sidebar = document.getElementById('sidebarMenu');
-            if (sidebar.classList.contains('open')) {
-                toggleSidebar();
-            }
-
-            document.getElementById('summaryPanel').classList.remove('expanded');
+            if (sidebar.classList.contains('open')) toggleSidebar();
 
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
             
             document.getElementById(tabId).classList.add('active');
-
-            document.querySelectorAll(`.tab-btn[onclick="switchTab('${tabId}')"]`).forEach(btn => {
-                btn.classList.add('active');
-            });
+            
+            // Map side triggers active metrics
+            if(tabId === 'charge-sheet') document.getElementById('btn-tab-charge-sheet').classList.add('active');
+            if(tabId === 'penal-codes') document.getElementById('btn-tab-penal-codes').classList.add('active');
+            if(tabId === 'booking-summary') document.getElementById('btn-tab-booking-summary').classList.add('active');
         }
 
         function renderChargeSheetGrid() {
@@ -727,40 +673,10 @@
                     </div>
                     <div class="card-actions">
                         <span style="font-size:12px; color:var(--text-secondary); font-weight:500;">Linked Crimes: ${group.charges.length}</span>
-                        <button class="btn-add" onclick="populateSummary('${key}')">Load Preset</button>
+                        <button class="btn-add" onclick="addPresetToCart('${key}')">Load Preset</button>
                     </div>
                 `;
                 grid.appendChild(card);
-            }
-        }
-
-        function populateSummary(groupKey) {
-            const group = chargeSheetGroups[groupKey];
-            const basketItems = document.getElementById('basketItems');
-            basketItems.innerHTML = '';
-
-            let accumulatedFine = 0;
-            let accumulatedTime = 0;
-
-            group.charges.forEach(charge => {
-                accumulatedFine += charge.fine;
-                accumulatedTime += charge.jailTime;
-
-                const itemRow = document.createElement('div');
-                itemRow.className = 'basket-item';
-                itemRow.innerHTML = `
-                    <span>${charge.label}</span>
-                    <strong>$${charge.fine.toLocaleString()} / ${charge.jailTime} Mo</strong>
-                `;
-                basketItems.appendChild(itemRow);
-            });
-
-            document.getElementById('summaryFine').innerText = `$${accumulatedFine.toLocaleString()}`;
-            document.getElementById('summaryTime').innerText = `${accumulatedTime} Months`;
-            document.getElementById('summaryCap').innerText = `$${group.capFine.toLocaleString()} / ${group.capTime} Months`;
-
-            if (window.innerWidth < 992) {
-                document.getElementById('summaryPanel').classList.add('expanded');
             }
         }
 
@@ -776,7 +692,6 @@
                 tr.setAttribute('data-desc', item.description.toLowerCase());
 
                 let readableCategory = item.category.replace('_', ' ');
-
                 let fineDisplay = item.fine === 999999 ? "Judicial Discretion" : `$${item.fine.toLocaleString()}`;
                 let jailDisplay = item.jailTime === 999999 || item.jailTime === 9999999 || item.jailTime === 99999999 ? "H.U.T" : `${item.jailTime} Mos`;
 
@@ -786,9 +701,91 @@
                     <td style="font-size:13.5px; line-height:1.5;">${item.description}</td>
                     <td style="font-weight:600; color:${item.fine === 999999 ? 'var(--text-muted)' : 'var(--text-main)'}">${fineDisplay}</td>
                     <td style="font-weight:600; color:var(--text-main)">${jailDisplay}</td>
+                    <td style="text-align:center;">
+                        <button class="btn-add" style="padding: 6px 12px; font-size: 12px;" onclick="addSingleCodeToCart('${key}')">+ Add</button>
+                    </td>
                 `;
                 tbody.appendChild(tr);
             }
+        }
+
+        // CART ARCHITECTURE CORE FUNCTIONS
+        function addPresetToCart(groupKey) {
+            const group = chargeSheetGroups[groupKey];
+            group.charges.forEach(charge => {
+                globalCart.push({
+                    label: charge.label,
+                    fine: charge.fine,
+                    jailTime: charge.jailTime
+                });
+            });
+            updateCartUI();
+        }
+
+        function addSingleCodeToCart(itemKey) {
+            const item = penalCodes[itemKey];
+            globalCart.push({
+                label: item.label,
+                fine: item.fine === 999999 ? 0 : item.fine, // Handle Discretion safely
+                jailTime: (item.jailTime === 999999 || item.jailTime === 9999999) ? 0 : item.jailTime
+            });
+            updateCartUI();
+        }
+
+        function removeCartItem(index) {
+            globalCart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function clearGlobalCart() {
+            globalCart = [];
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            // Badges counter elements metrics configuration
+            const totalCount = globalCart.length;
+            document.getElementById('globalCartBadge').innerText = totalCount;
+            document.getElementById('floatingCartBadge').innerText = totalCount;
+
+            const floatBar = document.getElementById('floatingSummaryBar');
+            if (totalCount > 0 && window.innerWidth < 992) {
+                floatBar.classList.add('visible');
+            } else {
+                floatBar.classList.remove('visible');
+            }
+
+            // Sync structural entries across Dedicated Workspace Worksheet
+            const container = document.getElementById('workspaceCartItems');
+            container.innerHTML = '';
+
+            let accumulatedFine = 0;
+            let accumulatedTime = 0;
+
+            if (globalCart.length === 0) {
+                container.innerHTML = `<p style="color: var(--text-muted); font-size: 14px; text-align: center; padding: 40px 0;">No active legal codes or operations presets added to execution stack.</p>`;
+            } else {
+                globalCart.forEach((item, index) => {
+                    accumulatedFine += item.fine;
+                    accumulatedTime += item.jailTime;
+
+                    const row = document.createElement('div');
+                    row.className = 'summary-item-row';
+                    row.innerHTML = `
+                        <div class="details-pane">
+                            <h4>${item.label}</h4>
+                            <p>$${item.fine.toLocaleString()} / ${item.jailTime} Months</p>
+                        </div>
+                        <button class="btn-action-cart remove" onclick="removeCartItem(${index})">Remove</button>
+                    `;
+                    container.appendChild(row);
+                });
+            }
+
+            // Update running summary total calculations box
+            document.getElementById('boxFine').innerText = `$${accumulatedFine.toLocaleString()}`;
+            document.getElementById('boxTime').innerText = `${accumulatedTime} Months`;
+            document.getElementById('boxGrandTotal').innerText = `$${accumulatedFine.toLocaleString()} & ${accumulatedTime} Mos`;
         }
 
         function filterCategory(category, element) {
