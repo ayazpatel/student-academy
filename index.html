@@ -421,7 +421,7 @@
             border: 1px solid var(--border-color);
             box-shadow: var(--shadow-sm);
         }
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; min-width: 850px; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; min-width: 900px; }
         th { background: var(--bg-elevated); color: var(--text-muted); padding: 14px 20px; font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; border-bottom: 1px solid var(--border-color); }
         tbody tr { background: var(--bg-elevated); transition: var(--spring-transition); }
         td { padding: 18px 20px; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); vertical-align: middle; line-height: 1.5; }
@@ -543,15 +543,16 @@
                                 <tr>
                                     <th style="width: 25%">Offense</th>
                                     <th style="width: 15%">Classification</th>
-                                    <th style="width: 40%">Statutory Definition</th>
+                                    <th style="width: 35%">Statutory Definition</th>
                                     <th style="width: 10%">Fine</th>
                                     <th style="width: 5%">Jail Month</th>
+                                    <th style="width: 5%">CMS</th>
                                     <th style="width: 5%; text-align: center;">Action</th>
                                 </tr>
                             </thead>
                             <tbody id="penalCodesTableBody">
                                 <tr>
-                                    <td colspan="6" style="color: var(--text-muted); font-size: 13px; text-align: center; padding: 30px 0;">Loading legal code indexes...</td>
+                                    <td colspan="7" style="color: var(--text-muted); font-size: 13px; text-align: center; padding: 30px 0;">Loading legal code indexes...</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -576,7 +577,8 @@
                             <h3 style="font-size: 16px; font-weight: 700;">Financial & Jail Run Totals</h3>
                             <div class="meta-summary-row"><span>Accumulated Fine</span><span id="boxFine">$0</span></div>
                             <div class="meta-summary-row"><span>Accumulated Time</span><span id="boxTime">0 Months</span></div>
-                            <div class="meta-summary-row total-bold"><span>Total Adjusted Booking</span><span id="boxGrandTotal">$0</span></div>
+                            <div class="meta-summary-row"><span>Accumulated CMS</span><span id="boxCMS">0 CMS</span></div>
+                            <div class="meta-summary-row total-bold"><span>Total Adjusted Booking</span><span id="boxGrandTotal">$0 & 0 Mos [0 CMS]</span></div>
                         </div>
                     </div>
                 </div>
@@ -599,6 +601,7 @@
         
         // GLOBAL CART STORAGE SYSTEM ENGINE
         let globalCart = [];
+        const CMS_DEFAULT_VALUE = 5;
 
         const getBaseUrl = () => {
             if (window.location.hostname.includes("github.io")) {
@@ -659,18 +662,35 @@
             updateCartUI();
         }
 
+        // MATHEMATICAL ENGINE FOR CORE CMS METRICS CALCULATIONS
+        function calculateCMSValue(jailTimeMonths) {
+            if (jailTimeMonths === 999999 || jailTimeMonths === 9999997 || jailTimeMonths === 9999999 || jailTimeMonths === 99999999) {
+                return 0; // Avoid multiplication loops on H.U.T flags
+            }
+            if (jailTimeMonths === 0) {
+                return 1 * CMS_DEFAULT_VALUE; // Fall back safely to standard default multiplier
+            }
+            return jailTimeMonths * CMS_DEFAULT_VALUE;
+        }
+
         function renderChargeSheetGrid() {
             const grid = document.getElementById('robberyGrid');
             grid.innerHTML = '';
 
             for (const key in chargeSheetGroups) {
                 const group = chargeSheetGroups[key];
+                
+                // Calculate preset totals for display purposes
+                let presetCMS = 0;
+                group.charges.forEach(c => { presetCMS += calculateCMSValue(c.jailTime); });
+
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.innerHTML = `
                     <div>
                         <h3>${group.label}</h3>
-                        <div class="card-meta">System Max: $${group.capFine.toLocaleString()} / ${group.capTime} Months</div>
+                        <div class="card-meta">Max Cap: $${group.capFine.toLocaleString()} / ${group.capTime} Mos</div>
+                        <div class="card-meta" style="color: var(--accent); margin-top:2px;">Calculated CMS: ${presetCMS} CMS</div>
                     </div>
                     <div class="card-actions">
                         <span style="font-size:12px; color:var(--text-secondary); font-weight:500;">Linked Crimes: ${group.charges.length}</span>
@@ -694,7 +714,12 @@
 
                 let readableCategory = item.category.replace('_', ' ');
                 let fineDisplay = item.fine === 999999 ? "Judicial Discretion" : `$${item.fine.toLocaleString()}`;
-                let jailDisplay = item.jailTime === 999999 || item.jailTime === 9999999 || item.jailTime === 99999999 ? "H.U.T" : `${item.jailTime} Months`;
+                
+                let isHUT = (item.jailTime === 999999 || item.jailTime === 9999999 || item.jailTime === 99999999);
+                let jailDisplay = isHUT ? "H.U.T" : `${item.jailTime} Mos`;
+                
+                // Invoke CMS Engine mapping values 
+                let cmsDisplay = isHUT ? "N/A" : `${calculateCMSValue(item.jailTime)}`;
 
                 tr.innerHTML = `
                     <td style="font-weight:600; color:var(--text-main); font-size:15px; letter-spacing:-0.2px;">${item.label}</td>
@@ -702,6 +727,7 @@
                     <td style="font-size:13.5px; line-height:1.5;">${item.description}</td>
                     <td style="font-weight:600; color:${item.fine === 999999 ? 'var(--text-muted)' : 'var(--text-main)'}">${fineDisplay}</td>
                     <td style="font-weight:600; color:var(--text-main)">${jailDisplay}</td>
+                    <td style="font-weight:600; color:var(--accent)">${cmsDisplay}</td>
                     <td style="text-align:center;">
                         <button class="btn-add" style="padding: 6px 12px; font-size: 12px;" onclick="addSingleCodeToCart('${key}')">+ Add</button>
                     </td>
@@ -710,20 +736,19 @@
             }
         }
 
-        // DUPLICATION-PREVENTATIVE ENGINE CODES
         function addPresetToCart(groupKey) {
             const group = chargeSheetGroups[groupKey];
             let duplicateFound = false;
 
             group.charges.forEach(charge => {
-                // Check if item's label is already present in global store array
                 const isDuplicate = globalCart.some(cartItem => cartItem.label.toLowerCase() === charge.label.toLowerCase());
                 
                 if (!isDuplicate) {
                     globalCart.push({
                         label: charge.label,
                         fine: charge.fine,
-                        jailTime: charge.jailTime
+                        jailTime: charge.jailTime,
+                        cms: calculateCMSValue(charge.jailTime)
                     });
                 } else {
                     duplicateFound = true;
@@ -738,19 +763,18 @@
 
         function addSingleCodeToCart(itemKey) {
             const item = penalCodes[itemKey];
-            
-            // Check if singular offense title matches inside global list array elements
             const isDuplicate = globalCart.some(cartItem => cartItem.label.toLowerCase() === item.label.toLowerCase());
 
             if (isDuplicate) {
                 alert(`The charge "${item.label}" has already been processed into the summary workspace.`);
-                return; // Stop execution stack loops completely
+                return; 
             }
 
             globalCart.push({
                 label: item.label,
                 fine: item.fine === 999999 ? 0 : item.fine, 
-                jailTime: (item.jailTime === 999999 || item.jailTime === 9999999) ? 0 : item.jailTime
+                jailTime: (item.jailTime === 999999 || item.jailTime === 9999999) ? 0 : item.jailTime,
+                cms: calculateCMSValue(item.jailTime === 999999 || item.jailTime === 9999999 ? 0 : item.jailTime)
             });
             updateCartUI();
         }
@@ -783,6 +807,7 @@
 
             let accumulatedFine = 0;
             let accumulatedTime = 0;
+            let accumulatedCMS = 0;
 
             if (globalCart.length === 0) {
                 container.innerHTML = `<p style="color: var(--text-muted); font-size: 14px; text-align: center; padding: 40px 0;">No active legal codes or operations presets added to execution stack.</p>`;
@@ -790,13 +815,14 @@
                 globalCart.forEach((item, index) => {
                     accumulatedFine += item.fine;
                     accumulatedTime += item.jailTime;
+                    accumulatedCMS += item.cms;
 
                     const row = document.createElement('div');
                     row.className = 'summary-item-row';
                     row.innerHTML = `
                         <div class="details-pane">
                             <h4>${item.label}</h4>
-                            <p>$${item.fine.toLocaleString()} / ${item.jailTime} Months</p>
+                            <p>$${item.fine.toLocaleString()} / ${item.jailTime} Mos [${item.cms} CMS]</p>
                         </div>
                         <button class="btn-action-cart remove" onclick="removeCartItem(${index})">Remove</button>
                     `;
@@ -804,9 +830,11 @@
                 });
             }
 
+            // Sync aggregate boxes
             document.getElementById('boxFine').innerText = `$${accumulatedFine.toLocaleString()}`;
             document.getElementById('boxTime').innerText = `${accumulatedTime} Months`;
-            document.getElementById('boxGrandTotal').innerText = `$${accumulatedFine.toLocaleString()} & ${accumulatedTime} Months`;
+            document.getElementById('boxCMS').innerText = `${accumulatedCMS} CMS`;
+            document.getElementById('boxGrandTotal').innerText = `$${accumulatedFine.toLocaleString()} & ${accumulatedTime} Mos [${accumulatedCMS} CMS]`;
         }
 
         function filterCategory(category, element) {
