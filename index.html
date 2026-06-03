@@ -17,12 +17,12 @@
             --text-secondary: #3c3c43;          /* Secondary Label */
             --text-muted: #8e8e93;              /* iOS System Gray */
             
-            /* PURE WHITE / MONOCHROME SYSTEM LIGHT TRANSITION */
-            --accent: #000000;                  
-            --accent-bg: rgba(0, 0, 0, 0.05);
-            --accent-glow: rgba(0, 0, 0, 0.08);
+            /* NATIVE iOS TINT & LIGHT SYSTEM TRANSITION */
+            --accent: #007aff;                  /* Native iOS System Blue Tint */
+            --accent-bg: rgba(0, 122, 255, 0.1); /* Subtle Blue Fill for secondary actions */
+            --accent-glow: rgba(0, 122, 255, 0.15);
             --border-color: rgba(0, 0, 0, 0.06);
-            --border-focus: rgba(0, 0, 0, 0.3);
+            --border-focus: rgba(0, 122, 255, 0.4);
 
             --success: #34c759;                 /* iOS System Green */
             --warning: #ff9500;                 /* iOS System Orange */
@@ -76,7 +76,7 @@
             width: 56px;
             height: 56px;
             position: relative;
-            background: rgba(0, 0, 0, 0.01);
+            background: rgba(0, 122, 255, 0.02);
             border: 1px solid var(--border-color);
             border-radius: 50%;
         }
@@ -239,7 +239,7 @@
         }
         .tab-btn:active { transform: scale(0.98); }
         .tab-btn.active { 
-            background: var(--text-main); 
+            background: var(--accent); 
             color: #ffffff; 
             font-weight: 600;
         }
@@ -303,8 +303,9 @@
         .card-meta { font-size: 13px; color: var(--text-secondary); margin-top: 4px; font-variant-numeric: tabular-nums; }
         .card-actions { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 14px; }
         
+        /* SOLID NATIVE iOS BLUE ACCENT BUTTON */
         .btn-add { 
-            background: var(--text-main); 
+            background: var(--accent); 
             border: none; 
             color: #ffffff; 
             padding: 8px 16px; 
@@ -314,8 +315,8 @@
             font-size: 13px; 
             transition: var(--spring-transition); 
         }
-        .btn-add:hover { background: #333333; }
-        .btn-add:active { transform: scale(0.95); }
+        .btn-add:hover { background: #0062cc; }
+        .btn-add:active { transform: scale(0.95); opacity: 0.85; }
 
         /* iOS Bottom Fixed Sheet Summary Bar with Premium Breathing Space */
         .basket-panel { 
@@ -326,7 +327,6 @@
             -webkit-backdrop-filter: blur(30px);
             border-top: 1px solid var(--border-color); 
             border-radius: var(--radius-xl) var(--radius-xl) 0 0; 
-            /* Added padding-bottom to comfortably separate the layout from bottom view limits */
             padding: 16px 20px calc(24px + env(safe-area-inset-bottom)) 20px; 
             z-index: 101;
             box-shadow: 0 -8px 30px rgba(0,0,0,0.06);
@@ -337,7 +337,7 @@
 
         .basket-panel.expanded {
             max-height: 75vh;
-            overflow: auto; /* Handles long list limits gracefully */
+            overflow: auto;
         }
 
         .basket-header-toggle {
@@ -352,10 +352,10 @@
         .basket-title::after {
             content: '• View details';
             font-size: 13px;
-            color: var(--text-muted);
+            color: var(--accent); /* iOS Blue Hint */
             font-weight: 500;
         }
-        .basket-panel.expanded .basket-title::after { content: '• Tap to minimize'; }
+        .basket-panel.expanded .basket-title::after { content: '• Tap to minimize'; color: var(--text-muted); }
 
         .basket-items { max-height: 280px; overflow-y: auto; margin-bottom: 16px; display: none; padding: 4px 0; }
         .basket-panel.expanded .basket-items { display: block; }
@@ -370,13 +370,13 @@
             flex-direction: column; 
             gap: 10px; 
             background: var(--bg-base); 
-            margin-bottom: 12px; /* Generates breathing space right below the internal elements block */
+            margin-bottom: 12px; 
         }
 
         .total-row { display: flex; justify-content: space-between; font-size: 14px; color: var(--text-secondary); flex: 1; min-width: 100px; font-variant-numeric: tabular-nums; }
         .total-row span:last-child { color: var(--text-main); font-weight: 600; }
         .total-row.grand-total { font-size: 14px; font-weight: 600; color: var(--text-main); }
-        .total-row.grand-total span:last-child { color: var(--text-main); }
+        .total-row.grand-total span:last-child { color: var(--accent); font-weight: 700; }
 
         .basket-panel.expanded .total-row { flex: none; width: 100%; }
         .basket-panel.expanded .total-row.grand-total { margin-top: 6px; padding-top: 12px; border-top: 1px solid var(--border-color); font-size: 15px; }
@@ -415,7 +415,8 @@
             transition: var(--spring-transition); 
         }
         .filter-btn:hover { color: var(--text-main); }
-        .filter-btn.active { background: var(--text-main); color: #ffffff; font-weight: 600; }
+        /* BLUE ACTIVE TINT FOR FILTERS */
+        .filter-btn.active { background: var(--accent); color: #ffffff; font-weight: 600; }
 
         /* Structured Grouped List System WITH RESPONSIVE OVERFLOW HORIZONTAL SCROLL FOR TABLE DATA */
         .table-container { 
@@ -463,8 +464,8 @@
             border-radius: 6px; 
             font-size: 12px; 
             font-weight: 500; 
-            background: var(--bg-pill);
-            color: var(--text-main);
+            background: var(--accent-bg);
+            color: var(--accent);
         }
 
         /* Responsive Mechanics for Burger Animation States */
@@ -492,14 +493,14 @@
 
             .nav-menu { padding: 10px 16px; gap: 6px; flex: 1; }
             .tab-btn { background: transparent; padding: 12px 16px; font-size: 14px; text-align: left; border-radius: var(--radius-md); }
-            .tab-btn:hover { color: var(--text-main); background: var(--bg-base); }
-            .tab-btn.active { background: var(--bg-base); color: var(--text-main); }
+            .tab-btn:hover { color: var(--accent); background: var(--bg-base); }
+            .tab-btn.active { background: var(--bg-base); color: var(--accent); }
 
             main { margin-left: var(--sidebar-width); margin-top: 0; padding: 48px; margin-bottom: 0; width: calc(100% - var(--sidebar-width)); }
 
             .calculator-layout { display: grid; grid-template-columns: 1fr 380px; gap: 32px; align-items: start; }
             
-            /* Revert vertical flow to multi-column desktop matrix grid grid layout */
+            /* Revert vertical flow to multi-column desktop matrix grid layout */
             .robbery-grid { 
                 display: grid; 
                 grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
@@ -531,13 +532,11 @@
 </head>
 <body>
 
-    <!-- VISUAL PRELOADER SCREEN OVERLAY CONTAINER -->
     <div id="appPreloader">
         <div class="radar-spinner"></div>
         <div class="preloader-text" id="preloaderText">Syncing secure data nodes...</div>
     </div>
 
-    <!-- MAIN APPLICATION CONTAINER WRAPPER -->
     <div id="mainAppContent">
         <div class="app-container">
             <header>
@@ -567,13 +566,10 @@
             </nav>
 
             <main>
-                <!-- Charge Sheet Tab Panel -->
                 <div id="charge-sheet" class="tab-content active">
                     <div class="calculator-layout">
-                        <!-- Pure Vertical Preset List Architecture on Mobile Viewports -->
                         <div class="robbery-grid" id="robberyGrid"></div>
 
-                        <!-- Optimized Booking Summary Bottom Sheet System -->
                         <div class="basket-panel" id="summaryPanel">
                             <div class="basket-header-toggle" onclick="toggleSummaryPanel()">
                                 <div class="basket-title">Booking Summary</div>
@@ -590,7 +586,6 @@
                     </div>
                 </div>
 
-                <!-- Penal Codes Tab Panel -->
                 <div id="penal-codes" class="tab-content">
                     <div class="filter-bar">
                         <input type="text" id="searchBox" class="search-box" placeholder="Search parameters or data metrics..." oninput="filterTable()">
@@ -605,7 +600,6 @@
                         </div>
                     </div>
 
-                    <!-- Horizontal Scroll Enforcer for Large Tables on Mobile Viewports -->
                     <div class="table-container">
                         <table>
                             <thead>
