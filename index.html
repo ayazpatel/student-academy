@@ -292,7 +292,7 @@
         }
         .card:hover { border-color: var(--border-focus); box-shadow: var(--shadow-md); }
         .card h3 { font-size: 16px; font-weight: 600; color: var(--text-main); letter-spacing: -0.2px; }
-        .card-meta { font-size: 13px; color: var(--text-secondary); margin-top: 5px; font-variant-numeric: tabular-nums; }
+        .card-meta { font-size: 13px; color: var(--text-secondary); margin-top: 5px; font-variant-numeric: tabular-nums; font-weight: 500; }
         .card-actions { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(0, 0, 0, 0.03); padding-top: 14px; }
         
         /* Native iOS Buttons */
@@ -421,7 +421,7 @@
             border: 1px solid var(--border-color);
             box-shadow: var(--shadow-sm);
         }
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; min-width: 900px; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; min-width: 850px; }
         th { background: var(--bg-elevated); color: var(--text-muted); padding: 14px 20px; font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; border-bottom: 1px solid var(--border-color); }
         tbody tr { background: var(--bg-elevated); transition: var(--spring-transition); }
         td { padding: 18px 20px; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); vertical-align: middle; line-height: 1.5; }
@@ -479,13 +479,11 @@
 </head>
 <body>
 
-    <!-- INSTANT PRELOADER -->
     <div id="appPreloader">
         <div class="radar-spinner"></div>
         <div class="preloader-text" id="preloaderText">Syncing secure data nodes...</div>
     </div>
 
-    <!-- MAIN APP WRAPPER -->
     <div id="mainAppContent">
         <div class="app-container">
             <header>
@@ -517,12 +515,10 @@
             </nav>
 
             <main>
-                <!-- TAB 1: CHARGE SHEET -->
                 <div id="charge-sheet" class="tab-content active">
                     <div class="robbery-grid" id="robberyGrid"></div>
                 </div>
 
-                <!-- TAB 2: PENAL CODES DIRECTORY -->
                 <div id="penal-codes" class="tab-content">
                     <div class="filter-bar">
                         <input type="text" id="searchBox" class="search-box" placeholder="Search parameters or data metrics..." oninput="filterTable()">
@@ -559,7 +555,6 @@
                     </div>
                 </div>
 
-                <!-- TAB 3: IMMERSIVE DEDICATED BOOKING WORKSPACE -->
                 <div id="booking-summary" class="tab-content">
                     <div class="booking-workspace-container">
                         <div style="display: flex; flex-direction: column; gap: 16px;">
@@ -569,22 +564,20 @@
                                 <button class="btn-clear-all" onclick="clearGlobalCart()">Clear All Selected Codes</button>
                             </div>
                             <div class="summary-items-list" id="workspaceCartItems">
-                                <!-- Dynamic Additions Inject Here -->
-                            </div>
+                                </div>
                         </div>
 
                         <div class="summary-aggregated-box">
                             <h3 style="font-size: 16px; font-weight: 700;">Financial & Jail Run Totals</h3>
                             <div class="meta-summary-row"><span>Accumulated Fine</span><span id="boxFine">$0</span></div>
                             <div class="meta-summary-row"><span>Accumulated Time</span><span id="boxTime">0 Months</span></div>
-                            <div class="meta-summary-row"><span>Accumulated CMS</span><span id="boxCMS">0 CMS</span></div>
-                            <div class="meta-summary-row total-bold"><span>Total Adjusted Booking</span><span id="boxGrandTotal">$0 & 0 Mos [0 CMS]</span></div>
+                            <div class="meta-summary-row"><span>Accumulated CMS</span><span id="boxCMS">0 CMSTask</span></div>
+                            <div class="meta-summary-row total-bold"><span>Total Adjusted Booking</span><span id="boxGrandTotal">$0 & 0 Mos [0 CMSTask]</span></div>
                         </div>
                     </div>
                 </div>
             </main>
 
-            <!-- FLOATING MOBILE CART TRIGGER QUICK JUMP -->
             <div class="floating-summary-trigger" id="floatingSummaryBar" onclick="switchTab('booking-summary')">
                 <span class="title-label">View Dynamic Booking Summary</span>
                 <span class="action-badge" id="floatingCartBadge">0</span>
@@ -665,10 +658,10 @@
         // MATHEMATICAL ENGINE FOR CORE CMS METRICS CALCULATIONS
         function calculateCMSValue(jailTimeMonths) {
             if (jailTimeMonths === 999999 || jailTimeMonths === 9999997 || jailTimeMonths === 9999999 || jailTimeMonths === 99999999) {
-                return 0; // Avoid multiplication loops on H.U.T flags
+                return 0; 
             }
             if (jailTimeMonths === 0) {
-                return 1 * CMS_DEFAULT_VALUE; // Fall back safely to standard default multiplier
+                return 1 * CMS_DEFAULT_VALUE; 
             }
             return jailTimeMonths * CMS_DEFAULT_VALUE;
         }
@@ -680,7 +673,7 @@
             for (const key in chargeSheetGroups) {
                 const group = chargeSheetGroups[key];
                 
-                // Calculate preset totals for display purposes
+                // Calculate preset cap total CMS constraints mapping formula parameters dynamically
                 let presetCMS = 0;
                 group.charges.forEach(c => { presetCMS += calculateCMSValue(c.jailTime); });
 
@@ -689,8 +682,7 @@
                 card.innerHTML = `
                     <div>
                         <h3>${group.label}</h3>
-                        <div class="card-meta">Max Cap: $${group.capFine.toLocaleString()} / ${group.capTime} Mos</div>
-                        <div class="card-meta" style="color: var(--accent); margin-top:2px;">Calculated CMS: ${presetCMS} CMS</div>
+                        <div class="card-meta">Max Cap: $${group.capFine} / ${group.capTime} Months / ${presetCMS} CMS Task</div>
                     </div>
                     <div class="card-actions">
                         <span style="font-size:12px; color:var(--text-secondary); font-weight:500;">Linked Crimes: ${group.charges.length}</span>
@@ -718,7 +710,6 @@
                 let isHUT = (item.jailTime === 999999 || item.jailTime === 9999999 || item.jailTime === 99999999);
                 let jailDisplay = isHUT ? "H.U.T" : `${item.jailTime} Mos`;
                 
-                // Invoke CMS Engine mapping values 
                 let cmsDisplay = isHUT ? "N/A" : `${calculateCMSValue(item.jailTime)}`;
 
                 tr.innerHTML = `
@@ -822,7 +813,7 @@
                     row.innerHTML = `
                         <div class="details-pane">
                             <h4>${item.label}</h4>
-                            <p>$${item.fine.toLocaleString()} / ${item.jailTime} Mos [${item.cms} CMS]</p>
+                            <p>$${item.fine.toLocaleString()} / ${item.jailTime} Mos [${item.cms} CMS Task]</p>
                         </div>
                         <button class="btn-action-cart remove" onclick="removeCartItem(${index})">Remove</button>
                     `;
@@ -830,11 +821,11 @@
                 });
             }
 
-            // Sync aggregate boxes
+            // Sync structural running summary aggregate boxes variables
             document.getElementById('boxFine').innerText = `$${accumulatedFine.toLocaleString()}`;
             document.getElementById('boxTime').innerText = `${accumulatedTime} Months`;
-            document.getElementById('boxCMS').innerText = `${accumulatedCMS} CMS`;
-            document.getElementById('boxGrandTotal').innerText = `$${accumulatedFine.toLocaleString()} & ${accumulatedTime} Mos [${accumulatedCMS} CMS]`;
+            document.getElementById('boxCMS').innerText = `${accumulatedCMS} CMS Task`;
+            document.getElementById('boxGrandTotal').innerText = `$${accumulatedFine.toLocaleString()} & ${accumulatedTime} Mos [${accumulatedCMS} CMS Task]`;
         }
 
         function filterCategory(category, element) {
