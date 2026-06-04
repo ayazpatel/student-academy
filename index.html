@@ -725,7 +725,7 @@
 
         // CONTROL TAB INDEX ACTIONS EXECUTION STACK
         function switchTab(tabId) {
-            tabSwitchPauseIFrame();
+            // tabSwitchPauseIFrame();
 
             currentTab = tabId; 
             const sidebar = document.getElementById('sidebarMenu');
@@ -942,6 +942,8 @@
             });
         }
 
+
+        // TODO: need a fix for it
         function tabSwitchPauseIFrame() {
         const iframes = document.querySelectorAll('main iframe');
         
