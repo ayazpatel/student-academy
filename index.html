@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
     <title>SASP Academy</title>
-    <link rel="icon" type="image/png" href="./assets/logo.png">
+    <link rel="icon" type="image/png" href="./assets/logo.jpg">
     <style>
         :root {
             /* CRISP YET SOFT iOS INTERMEDIATE LIGHT PALETTE */
@@ -33,7 +33,7 @@
 
             /* Advanced Dimensioning & Uniform Radii */
             --sidebar-width: 300px;
-            --top-nav-height: 64px; /* Back to classic slim height for mobile */
+            --top-nav-height: 64px; 
             --radius-xl: 24px;
             --radius-lg: 16px;
             --radius-md: 12px;
@@ -121,7 +121,7 @@
             min-height: 100vh;
         }
         
-        /* Fixed Translucent iOS Header Bar - Mobile (Classic Behavior) */
+        /* Fixed Translucent iOS Header Bar - Mobile */
         header { 
             background-color: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px) saturate(190%);
@@ -137,7 +137,7 @@
             z-index: 100;
         }
         
-        /* Mobile View: Classic horizontal alignment */
+        /* Mobile View Structure: Left to Right row alignment mapping */
         .brand-group {
             display: flex;
             flex-direction: row;
@@ -152,7 +152,6 @@
             color: var(--text-main); 
         }
 
-        /* Classic Size for Mobile Navigation Bar */
         .mdt-logo {
             width: 28px;
             height: 28px;
@@ -181,7 +180,7 @@
             transition: var(--spring-transition);
         }
 
-        /* Navigation Drawer Layout Framework - Mobile Sidebar Sheet */
+        /* Navigation Drawer Layout Framework */
         .sidebar {
             position: fixed;
             bottom: 0; left: 0; right: 0;
@@ -212,7 +211,7 @@
             margin: 12px auto 16px auto;
         }
 
-        /* Mobile Sidebar Header Layout */
+        /* Mobile Sidebar Header Style Reset */
         .sidebar-header {
             padding: 0 24px 16px 24px;
             text-align: left;
@@ -313,6 +312,22 @@
         .card-meta { font-size: 13px; color: var(--text-secondary); margin-top: 5px; font-variant-numeric: tabular-nums; font-weight: 500; }
         .card-actions { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(0, 0, 0, 0.03); padding-top: 14px; }
         
+        /* Responsive Aspect Embedded Player Wrapper Style */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; 
+            height: 0;
+            overflow: hidden;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            background: #000000;
+            box-shadow: var(--shadow-md);
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+        }
+
         /* Native iOS Buttons */
         .btn-add, .btn-action-cart { 
             background: var(--accent); 
@@ -471,13 +486,13 @@
             }
             .sidebar::before { display: none; }
             
-            /* Center elements horizontally inside permanent left workspace panel */
+            /* Center elements horizontally inside permanent desktop sidebar panel */
             .sidebar-header { 
                 display: block; 
                 padding: 40px 24px 28px 24px; 
                 text-align: center; 
             }
-            /* Stack logo and title text vertically inside left side drawer layout */
+            /* Stack logo and title text vertically inside left side layout */
             .sidebar-header .brand-group {
                 flex-direction: column;
                 align-items: center;
@@ -489,7 +504,7 @@
                 margin-top: 12px;
             }
             
-            /* Enhanced Big Logo Size on Desktop Viewport Frame */
+            /* Enhanced Logo Size on Desktop frame */
             .sidebar-header .mdt-logo { 
                 width: 90px; 
                 height: 90px; 
@@ -527,7 +542,7 @@
         <div class="app-container">
             <header>
                 <div class="brand-group">
-                    <img src="./assets/logo.png" alt="MDT Logo" class="mdt-logo">
+                    <img src="./assets/logo.jpg" alt="MDT Logo" class="mdt-logo">
                     <h1>SASP Academy</h1>
                 </div>
                 <button class="menu-toggle" id="menuToggle" onclick="toggleSidebar()">
@@ -542,7 +557,7 @@
             <nav class="sidebar" id="sidebarMenu">
                 <div class="sidebar-header">
                     <div class="brand-group">
-                        <img src="./assets/logo.png" alt="MDT Logo" class="mdt-logo">
+                        <img src="./assets/logo.jpg" alt="MDT Logo" class="mdt-logo">
                         <h1>SASP Academy</h1>
                     </div>
                 </div>
@@ -620,16 +635,15 @@
 
                 <div id="ui-training" class="tab-content">
                     <div class="video-wrapper">
-                        <iframe src="YOUR_UI_YOUTUBE_EMBED_URL_HERE" title="UI Training Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="UI Training Video Node" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                     </div>
                 </div>
 
                 <div id="sop-training" class="tab-content">
                     <div class="video-wrapper">
-                        <iframe src="YOUR_SOP_YOUTUBE_EMBED_URL_HERE" title="SOP Training Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="SOP Training Video Node" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                     </div>
                 </div>
-
 
             </main>
 
@@ -693,6 +707,7 @@
             document.getElementById('menuToggle').classList.toggle('open');
         }
 
+        // CONTROL TAB INDEX ACTIONS EXECUTION STACK
         function switchTab(tabId) {
             currentTab = tabId; 
             const sidebar = document.getElementById('sidebarMenu');
@@ -706,6 +721,8 @@
             if(tabId === 'charge-sheet') document.getElementById('btn-tab-charge-sheet').classList.add('active');
             if(tabId === 'penal-codes') document.getElementById('btn-tab-penal-codes').classList.add('active');
             if(tabId === 'booking-summary') document.getElementById('btn-tab-booking-summary').classList.add('active');
+            if(tabId === 'ui-training') document.getElementById('btn-tab-ui-training').classList.add('active');
+            if(tabId === 'sop-training') document.getElementById('btn-tab-sop-training').classList.add('active');
 
             updateCartUI();
         }
