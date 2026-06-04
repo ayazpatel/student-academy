@@ -33,7 +33,7 @@
 
             /* Advanced Dimensioning & Uniform Radii */
             --sidebar-width: 300px;
-            --top-nav-height: 140px; /* Increased to allow vertical layout on mobile */
+            --top-nav-height: 64px; /* Back to classic slim height for mobile */
             --radius-xl: 24px;
             --radius-lg: 16px;
             --radius-md: 12px;
@@ -121,32 +121,28 @@
             min-height: 100vh;
         }
         
-        /* Fixed Translucent iOS Header Bar - Mobile */
+        /* Fixed Translucent iOS Header Bar - Mobile (Classic Behavior) */
         header { 
             background-color: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px) saturate(190%);
             -webkit-backdrop-filter: blur(20px) saturate(190%);
             border-bottom: 1px solid var(--border-color); 
-            padding: 16px 24px; 
+            padding: 0 24px; 
             display: flex; 
-            flex-direction: column;
             align-items: center; 
-            justify-content: center;
+            justify-content: space-between;
             position: fixed;
             top: 0; left: 0; right: 0;
             height: var(--top-nav-height);
             z-index: 100;
-            gap: 8px;
         }
         
-        /* Brand Group Layout for Centered Stack */
+        /* Mobile View: Classic horizontal alignment */
         .brand-group {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            gap: 8px;
+            gap: 12px;
         }
 
         header h1 { 
@@ -156,12 +152,12 @@
             color: var(--text-main); 
         }
 
-        /* Large Centered Logo Configuration */
+        /* Classic Size for Mobile Navigation Bar */
         .mdt-logo {
-            width: 64px;
-            height: 64px;
+            width: 28px;
+            height: 28px;
             object-fit: contain;
-            border-radius: var(--radius-md);
+            border-radius: var(--radius-sm);
         }
 
         .menu-toggle {
@@ -173,9 +169,7 @@
             flex-direction: column;
             gap: 5px;
             padding: 12px;
-            position: absolute;
-            right: 12px;
-            top: 24px;
+            margin-right: -12px;
             z-index: 110;
         }
         .menu-toggle span {
@@ -187,7 +181,7 @@
             transition: var(--spring-transition);
         }
 
-        /* Navigation Drawer Layout Framework */
+        /* Navigation Drawer Layout Framework - Mobile Sidebar Sheet */
         .sidebar {
             position: fixed;
             bottom: 0; left: 0; right: 0;
@@ -218,11 +212,22 @@
             margin: 12px auto 16px auto;
         }
 
+        /* Mobile Sidebar Header Layout */
         .sidebar-header {
             padding: 0 24px 16px 24px;
-            text-align: center;
+            text-align: left;
         }
-        
+        .sidebar-header .brand-group {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 12px;
+        }
+        .sidebar-header h1 {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
         .nav-menu {
             padding: 0 24px 24px 24px;
             display: flex;
@@ -466,12 +471,13 @@
             }
             .sidebar::before { display: none; }
             
-            /* Center elements horizontally inside sidebar header */
+            /* Center elements horizontally inside permanent left workspace panel */
             .sidebar-header { 
                 display: block; 
                 padding: 40px 24px 28px 24px; 
                 text-align: center; 
             }
+            /* Stack logo and title text vertically inside left side drawer layout */
             .sidebar-header .brand-group {
                 flex-direction: column;
                 align-items: center;
@@ -483,7 +489,7 @@
                 margin-top: 12px;
             }
             
-            /* Enhanced Logo Size on Deskstop Workspace layout */
+            /* Enhanced Big Logo Size on Desktop Viewport Frame */
             .sidebar-header .mdt-logo { 
                 width: 90px; 
                 height: 90px; 
