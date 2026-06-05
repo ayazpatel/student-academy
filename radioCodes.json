@@ -1,0 +1,520 @@
+{
+  "10-CODES": [
+    {
+      "code": "10-0",
+      "meaning": "Caution",
+      "color": "Green",
+      "priority": "Low"
+    },
+    {
+      "code": "10-1",
+      "meaning": "Radio Frequency Change",
+      "color": "Green",
+      "priority": "Low"
+    },
+    {
+      "code": "10-2",
+      "meaning": "Signal good",
+      "color": "Green",
+      "priority": "Low"
+    },
+    {
+      "code": "10-3",
+      "meaning": "Stop Transmitting",
+      "color": "Pink",
+      "priority": "Communication"
+    },
+    {
+      "code": "10-4",
+      "meaning": "Acknowledged",
+      "color": "Green",
+      "priority": "Low"
+    },
+    {
+      "code": "10-6",
+      "meaning": "Busy Unless Urgent",
+      "color": "White",
+      "priority": "Routine"
+    },
+    {
+      "code": "10-7",
+      "meaning": "Out Of Service",
+      "color": "Green",
+      "priority": "Low"
+    },
+    {
+      "code": "10-8",
+      "meaning": "In Service",
+      "color": "Green",
+      "priority": "Low"
+    },
+    {
+      "code": "10-9",
+      "meaning": "Repeat",
+      "color": "Green",
+      "priority": "Low"
+    },
+    {
+      "code": "10-10",
+      "meaning": "Negative",
+      "color": "Green",
+      "priority": "Low"
+    },
+    {
+      "code": "10-11",
+      "meaning": "Traffic Stop",
+      "color": "Yellow",
+      "priority": "Medium"
+    },
+    {
+      "code": "10-12",
+      "meaning": "Active Ride along",
+      "color": "Yellow",
+      "priority": "Medium"
+    },
+    {
+      "code": "10-13",
+      "meaning": "Shots Fired",
+      "color": "Red",
+      "priority": "High"
+    },
+    {
+      "code": "10-13B",
+      "meaning": "Shots Fired (Drive By)",
+      "color": "Red",
+      "priority": "High"
+    },
+    {
+      "code": "10-14",
+      "meaning": "Officer Down | Emergency",
+      "color": "Red",
+      "priority": "High"
+    },
+    {
+      "code": "10-15",
+      "meaning": "Suspect in Custody",
+      "color": "Yellow",
+      "priority": "Medium"
+    },
+    {
+      "code": "10-16",
+      "meaning": "Return to Hospital",
+      "color": "Yellow",
+      "priority": "Medium"
+    },
+    {
+      "code": "10-17",
+      "meaning": "Meet Complainant",
+      "color": "White",
+      "priority": "Routine"
+    },
+    {
+      "code": "10-18",
+      "meaning": "Quickly",
+      "color": "White",
+      "priority": "Routine"
+    },
+    {
+      "code": "10-19",
+      "meaning": "Police station",
+      "color": "Yellow",
+      "priority": "Medium"
+    },
+    {
+      "code": "10-20",
+      "meaning": "Location",
+      "color": "Green",
+      "priority": "Low"
+    },
+    {
+      "code": "10-21",
+      "meaning": "Call By Telephone",
+      "color": "White",
+      "priority": "Routine"
+    },
+    {
+      "code": "10-22",
+      "meaning": "Disregard",
+      "color": "Green",
+      "priority": "Low"
+    },
+    {
+      "code": "10-23",
+      "meaning": "Arrived At Scene",
+      "color": "Green",
+      "priority": "Low"
+    },
+    {
+      "code": "10-25",
+      "meaning": "Meet at",
+      "color": "White",
+      "priority": "Routine"
+    },
+    {
+      "code": "10-26",
+      "meaning": "Detaining Subject Expedite",
+      "color": "White",
+      "priority": "Routine"
+    },
+    {
+      "code": "10-27",
+      "meaning": "Driver's License Info",
+      "color": "Yellow",
+      "priority": "Medium"
+    },
+    {
+      "code": "10-28",
+      "meaning": "Check Vehicle Registration",
+      "color": "Yellow",
+      "priority": "Medium"
+    },
+    {
+      "code": "10-29",
+      "meaning": "Warrant check",
+      "color": "Yellow",
+      "priority": "Medium"
+    },
+    {
+      "code": "10-31",
+      "meaning": "Crime in progress",
+      "color": "Red",
+      "priority": "High"
+    },
+    {
+      "code": "10-32",
+      "meaning": "Person with Gun involved",
+      "color": "White",
+      "priority": "Routine"
+    },
+    {
+      "code": "10-34",
+      "meaning": "Fight In Progress",
+      "color": "White",
+      "priority": "Routine"
+    },
+    {
+      "code": "10-35",
+      "meaning": "Need Assistance",
+      "color": "White",
+      "priority": "Routine"
+    },
+    {
+      "code": "10-37",
+      "meaning": "Investigate susp. Vehicle",
+      "color": "Green",
+      "priority": "Low"
+    },
+    {
+      "code": "10-38",
+      "meaning": "Drug Sales",
+      "color": "White",
+      "priority": "Routine"
+    },
+    {
+      "code": "10-41",
+      "meaning": "Beginning Duty",
+      "color": "Green",
+      "priority": "Low"
+    },
+    {
+      "code": "10-42",
+      "meaning": "Ending Duty",
+      "color": "Green",
+      "priority": "Low"
+    },
+    {
+      "code": "10-43",
+      "meaning": "Switching Radio (Radio channel)",
+      "color": "Pink",
+      "priority": "Communication"
+    },
+    {
+      "code": "10-44",
+      "meaning": "Permission to Leave for",
+      "color": "White",
+      "priority": "Routine"
+    },
+    {
+      "code": "10-47",
+      "meaning": "Injured civilian",
+      "color": "White",
+      "priority": "Routine"
+    },
+    {
+      "code": "10-50",
+      "meaning": "Car Accident",
+      "color": "White",
+      "priority": "Routine"
+    },
+    {
+      "code": "10-52",
+      "meaning": "Ambulance Needed",
+      "color": "Red",
+      "priority": "High"
+    },
+    {
+      "code": "10-53",
+      "meaning": "Road Blocked At (Location)",
+      "color": "Yellow",
+      "priority": "Medium"
+    },
+    {
+      "code": "10-55",
+      "meaning": "Intoxicated Driver",
+      "color": "Yellow",
+      "priority": "Medium"
+    },
+    {
+      "code": "10-56",
+      "meaning": "Suspicious Activites",
+      "color": "White",
+      "priority": "Routine"
+    },
+    {
+      "code": "10-57",
+      "meaning": "Hit And Run",
+      "color": "Yellow",
+      "priority": "Medium"
+    },
+    {
+      "code": "10-59",
+      "meaning": "Convoy or Escort",
+      "color": "White",
+      "priority": "Routine"
+    },
+    {
+      "code": "10-60",
+      "meaning": "Stolen Vehicle",
+      "color": "White",
+      "priority": "Routine"
+    },
+    {
+      "code": "10-66",
+      "meaning": "Suspicious Person",
+      "color": "White",
+      "priority": "Routine"
+    },
+    {
+      "code": "10-67",
+      "meaning": "Vehicle Theft",
+      "color": "White",
+      "priority": "Routine"
+    },
+    {
+      "code": "10-70",
+      "meaning": "Explosion",
+      "color": "Red",
+      "priority": "High"
+    },
+    {
+      "code": "10-71A",
+      "meaning": "Medic Down",
+      "color": "Red",
+      "priority": "High"
+    },
+    {
+      "code": "10-71B",
+      "meaning": "Officer Down | Non Emergency",
+      "color": "White",
+      "priority": "Routine"
+    },
+    {
+      "code": "10-72",
+      "meaning": "Hostage Situation",
+      "color": "Red",
+      "priority": "High"
+    },
+    {
+      "code": "10-73",
+      "meaning": "Advise Status",
+      "color": "Green",
+      "priority": "Low"
+    },
+    {
+      "code": "10-76",
+      "meaning": "Enroute",
+      "color": "Green",
+      "priority": "Low"
+    },
+    {
+      "code": "10-77",
+      "meaning": "Need Backup (Non Emergency)",
+      "color": "Green",
+      "priority": "Low"
+    },
+    {
+      "code": "10-78",
+      "meaning": "Need Backup (Emergency)",
+      "color": "Red",
+      "priority": "High"
+    },
+    {
+      "code": "10-79",
+      "meaning": "ETA ( Estimate Time Of Arrival )",
+      "color": "Green",
+      "priority": "Low"
+    },
+    {
+      "code": "10-80",
+      "meaning": "Persuit In Progress",
+      "color": "Red",
+      "priority": "High"
+    },
+    {
+      "code": "10-85",
+      "meaning": "Delayed Due to",
+      "color": "Green",
+      "priority": "Low"
+    },
+    {
+      "code": "10-89",
+      "meaning": "Bomb Threat",
+      "color": "Red",
+      "priority": "High"
+    },
+    {
+      "code": "10-90",
+      "meaning": "Robbery In Progress",
+      "color": "Red",
+      "priority": "High"
+    },
+    {
+      "code": "10-90A",
+      "meaning": "Bank Robbery",
+      "color": "Red",
+      "priority": "High"
+    },
+    {
+      "code": "10-90B",
+      "meaning": "Jewellery Robbery",
+      "color": "Red",
+      "priority": "High"
+    },
+    {
+      "code": "10-90C",
+      "meaning": "Store Robbery",
+      "color": "Red",
+      "priority": "High"
+    },
+    {
+      "code": "10-90D",
+      "meaning": "House Robbery",
+      "color": "Red",
+      "priority": "High"
+    },
+    {
+      "code": "10-90E",
+      "meaning": "Life Invader",
+      "color": "Red",
+      "priority": "High"
+    },
+    {
+      "code": "10-90F",
+      "meaning": "Illegal Drop",
+      "color": "Red",
+      "priority": "High"
+    },
+    {
+      "code": "10-91",
+      "meaning": "Transport Unit",
+      "color": "White",
+      "priority": "Routine"
+    },
+    {
+      "code": "10-94",
+      "meaning": "Reckless Driving",
+      "color": "Yellow",
+      "priority": "Medium"
+    },
+    {
+      "code": "10-96",
+      "meaning": "Mental Subject",
+      "color": "White",
+      "priority": "Routine"
+    },
+    {
+      "code": "10-98",
+      "meaning": "Prision Break",
+      "color": "Red",
+      "priority": "High"
+    },
+    {
+      "code": "10-99",
+      "meaning": "Everyone Respond",
+      "color": "Red",
+      "priority": "High"
+    }
+  ],
+  "ROUTINE-CODES": [
+    {
+      "code": "Code 0",
+      "meaning": "FiveM Server Crash"
+    },
+    {
+      "code": "Code 1",
+      "meaning": "No lights/ Patrolling | Routine situation, no emergency"
+    },
+    {
+      "code": "Code 2",
+      "meaning": "Only lights/ Patrolling | Urgent response, lights allowed"
+    },
+    {
+      "code": "Code 3",
+      "meaning": "Lights On / Siren On | Emergency response, lights and sirens"
+    },
+    {
+      "code": "Code 4",
+      "meaning": "Situation Clear / Under Control | No further units needed"
+    },
+    {
+      "code": "Code 5",
+      "meaning": "Felony Stop | High-risk stop (approach with caution)"
+    },
+    {
+      "code": "Code 6",
+      "meaning": "Searching area | Investigation in progress / officer on scene"
+    },
+    {
+      "code": "Code 7",
+      "meaning": "Stay away from current situation"
+    },
+    {
+      "code": "Code 44",
+      "meaning": "Food Break"
+    },
+    {
+      "code": "Code 50",
+      "meaning": "Report Writing"
+    }
+  ],
+  "COLOR-CODES": [
+    {
+      "code": "Code Blue",
+      "meaning": "High-risk situation or armed suspect"
+    },
+    {
+      "code": "Code Yellow",
+      "meaning": "Situation developing / stay alert"
+    },
+    {
+      "code": "Code Red",
+      "meaning": "Active shooting / extreme threat"
+    },
+    {
+      "code": "Code Black",
+      "meaning": "Officer down / critical emergency"
+    },
+    {
+      "code": "Code Green",
+      "meaning": "Situation under control"
+    },
+    {
+      "code": "Code White",
+      "meaning": "Medical emergency / EMS required"
+    },
+    {
+      "code": "Code Silver",
+      "meaning": "Armed suspect with weapon"
+    }
+  ]
+}
