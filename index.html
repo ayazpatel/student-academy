@@ -1,212 +1,382 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    <title>SASP Student Academy</title>
-    <link rel="icon" type="image/png" href="./assets/logo.png">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-    <div id="appPreloader">
-        <div class="radar-spinner"></div>
-        <div class="preloader-text" id="preloaderText">Syncing secure data nodes...</div>
-    </div>
-
-    <div id="mainAppContent">
-        <div class="app-container">
-            <header>
-                <div class="brand-group">
-                    <img src="./assets/logo.png" alt="MDT Logo" class="mdt-logo">
-                    <h1>SASP Student Academy</h1>
-                </div>
-                <button class="menu-toggle" id="menuToggle" onclick="toggleSidebar()">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </header>
-
-            <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
-            
-            <nav class="sidebar" id="sidebarMenu">
-                <div class="sidebar-header">
-                    <div class="brand-group">
-                        <img src="./assets/logo.png" alt="MDT Logo" class="mdt-logo">
-                        <h1>SASP Student Academy</h1>
-                    </div>
-                </div>
-                
-                <div class="scroll-indicator top" id="scrollTopIndicator">
-                    <div class="scroll-hint">↑ More above</div>
-                </div>
-                
-                <div class="nav-menu" id="navMenu">
-                    <button class="tab-btn active" id="btn-tab-charge-sheet" onclick="switchTab('charge-sheet')">Charge Sheet</button>
-                    <button class="tab-btn" id="btn-tab-booking-summary" onclick="switchTab('booking-summary')">Booking Summary <span class="badge-count" id="globalCartBadge">0</span></button>
-                    <button class="tab-btn" id="btn-tab-penal-codes" onclick="switchTab('penal-codes')">Penal Codes Directory</button>
-                    <button class="tab-btn" id="btn-tab-ten-codes" onclick="switchTab('ten-codes')">Radio Codes</button>
-                    <button class="tab-btn" id="btn-tab-ui-training" onclick="switchTab('ui-training')">UI & MDT Training</button>
-                    <button class="tab-btn" id="btn-tab-sop-training" onclick="switchTab('sop-training')">SOP Training</button>
-                    <button class="tab-btn" id="btn-tab-field-training" onclick="switchTab('field-training')">Field Training</button>
-                    
-                    <!-- <button class="tab-btn">Sample Menu 01</button>
-                    <button class="tab-btn">Sample Menu 02</button>
-                    <button class="tab-btn">Sample Menu 03</button>
-                    <button class="tab-btn">Sample Menu 04</button>
-                    <button class="tab-btn">Sample Menu 05</button>
-                    <button class="tab-btn">Sample Menu 06</button>
-                    <button class="tab-btn">Sample Menu 07</button>
-                    <button class="tab-btn">Sample Menu 08</button>
-                    <button class="tab-btn">Sample Menu 09</button>
-                    <button class="tab-btn">Sample Menu 10</button> -->
-
-                </div>
-                
-                <div class="scroll-indicator bottom" id="scrollBottomIndicator">
-                    <div class="scroll-hint">Scroll to explore ↓</div>
-                </div>
-
-            </nav>
-
-
-            <main>
-                <div id="charge-sheet" class="tab-content active">
-                    <div class="robbery-grid" id="robberyGrid"></div>
-                </div>
-
-                <div id="penal-codes" class="tab-content">
-                    <div class="filter-bar">
-                        <input type="text" id="searchBox" class="search-box" placeholder="Search parameters or data metrics..." oninput="filterTable()">
-                        <div class="filter-buttons-scroll">
-                            <button class="filter-btn active" onclick="filterCategory('all', this)">All Codes</button>
-                            <button class="filter-btn" onclick="filterCategory('traffic', this)">Traffic</button>
-                            <button class="filter-btn" onclick="filterCategory('infraction', this)">Infraction</button>
-                            <button class="filter-btn" onclick="filterCategory('misdemeanor', this)">Misdemeanor</button>
-                            <button class="filter-btn" onclick="filterCategory('felony', this)">Felony</button>
-                            <button class="filter-btn" onclick="filterCategory('hut', this)">H.U.T</button>
-                            <button class="filter-btn" onclick="filterCategory('internal_affairs', this)">Internal Affairs</button>
-                        </div>
-                    </div>
-
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th style="width: 25%">Offense</th>
-                                    <th style="width: 15%">Classification</th>
-                                    <th style="width: 35%">Statutory Definition</th>
-                                    <th style="width: 10%">Fine</th>
-                                    <th style="width: 5%">Jail time</th>
-                                    <th style="width: 5%">CMS Task</th>
-                                    <th style="width: 5%; text-align: center;">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="penalCodesTableBody">
-                                <tr>
-                                    <td colspan="7" style="color: var(--text-muted); font-size: 13px; text-align: center; padding: 30px 0;">Loading legal code indexes...</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div id="booking-summary" class="tab-content">
-                    <div class="booking-workspace-container">
-                        <div style="display: flex; flex-direction: column; gap: 16px;">
-                            <div class="summary-headline-card">
-                                <h2>Booking Summary</h2>
-                                <p>Review selected criminal presets, singular infractions, and institutional fine metrics below.</p>
-                                <button class="btn-clear-all" onclick="clearGlobalCart()">Clear All Selected Codes</button>
-                            </div>
-                            <div class="summary-items-list" id="workspaceCartItems">
-                                </div>
-                        </div>
-
-                        <div class="summary-aggregated-box">
-                            <h3 style="font-size: 16px; font-weight: 700;">Financial & Jail Run Totals</h3>
-                            <div class="meta-summary-row"><span>Accumulated Fine</span><span id="boxFine">$0</span></div>
-                            <div class="meta-summary-row"><span>Accumulated Time</span><span id="boxTime">0 Months</span></div>
-                            <div class="meta-summary-row"><span>Accumulated CMS</span><span id="boxCMS">0 CMSTask</span></div>
-                            <div class="meta-summary-row total-bold"><span>Total Adjusted Booking</span><span id="boxGrandTotal">$0 & 0 Months [0 CMSTask]</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="ten-codes" class="tab-content">
-                    <div class="filter-bar">
-                        <!-- Dropdown for categories -->
-                        <select id="radioCodeCategory" class="search-box" style="margin-bottom: 4px;" onchange="changeRadioCategory()">
-                            <option value="10-CODES">10-Codes</option>
-                            <option value="ROUTINE-CODES">Routine Codes</option>
-                            <option value="COLOR-CODES">Color Codes</option>
-                        </select>
-                        
-                        <!-- Search and Shuffle -->
-                        <div style="display: flex; gap: 12px; width: 100%;">
-                            <input type="text" id="radioSearchBox" class="search-box" placeholder="Search codes or meanings..." oninput="applyRadioFilters()">
-                            <button class="btn-add" style="border-radius: var(--radius-md);" onclick="shuffleRadioCodes()">Shuffle</button>
-                        </div>
-
-                        <!-- Priority Filters (Only visible for 10-CODES) -->
-                        <div class="filter-buttons-scroll" id="priorityFilters">
-                            <button class="filter-btn active" onclick="filterRadioPriority('all', this)">All Priorities</button>
-                            <button class="filter-btn" onclick="filterRadioPriority('Low', this)">Low</button>
-                            <button class="filter-btn" onclick="filterRadioPriority('Routine', this)">Routine</button>
-                            <button class="filter-btn" onclick="filterRadioPriority('Medium', this)">Medium</button>
-                            <button class="filter-btn" onclick="filterRadioPriority('High', this)">High</button>
-                            <button class="filter-btn" onclick="filterRadioPriority('Communication', this)">Communication</button>
-                        </div>
-                    </div>
-
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th style="width: 20%">Code</th>
-                                    <th style="width: 50%">Meaning</th>
-                                    <!-- <th style="width: 15%" class="radio-extra-col">Color</th> -->
-                                    <th style="width: 15%" class="radio-extra-col">Priority</th>
-                                </tr>
-                            </thead>
-                            <tbody id="radioCodesTableBody">
-                                <tr>
-                                    <td colspan="4" style="color: var(--text-muted); font-size: 13px; text-align: center; padding: 30px 0;">Loading radio codes...</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div id="ui-training" class="tab-content">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/XpHMtT885Io?si=6chaM4tVL7wNb-BW" title="UI Training Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                    </div>
-                </div>
-
-                <div id="sop-training" class="tab-content">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/_qO8apr3X2M?si=-y-AOaFcdasRocrO" title="SOP Training Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                    </div>
-                </div>
-
-                <div id="field-training" class="tab-content">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/9Mo-oGfCwpM?si=An8iliFkXBNFxcyc" title="Field Training Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                    </div>
-                </div>
-
-            </main>
-
-            <div class="floating-summary-trigger" id="floatingSummaryBar" onclick="switchTab('booking-summary')">
-                <span class="title-label">View Dynamic Booking Summary</span>
-                <span class="action-badge" id="floatingCartBadge">0</span>
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>SASP / Student Academy — Field Operations Manual 2026</title>
+      <meta name="description" content="Tactical training, penal code index, and booking summary console for SASP cadets. Edition MMXXVI.">
+      <link rel="icon" type="image/svg+xml" href="./assets/logo.svg">
+      <!-- Fonts: Fraunces (editorial serif) + Inter Tight (body) + JetBrains Mono (data) -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="./style.css">
+   </head>
+   <body>
+      <!-- ============ GRAIN & GRID OVERLAY ============ -->
+      <div class="grain" aria-hidden="true"></div>
+      <div class="crosshair-grid" aria-hidden="true"></div>
+      <!-- ============ CUSTOM CURSOR ============ -->
+      <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+      <div class="cursor-ring" id="cursorRing" aria-hidden="true">
+         <span class="cursor-label" id="cursorLabel"></span>
+      </div>
+      <!-- ============ PRELOADER / ON-LOAD MOMENT ============ -->
+      <div id="appPreloader">
+         <div class="preloader-inner">
+            <div class="preloader-topline">
+               <span class="mono">SASP // 34.0522° N, 118.2437° W</span>
+               <span class="mono" id="preCount">000</span>
             </div>
-
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
+            <div class="preloader-title">
+               <div class="pre-line"><span>Syncing</span></div>
+               <div class="pre-line"><span>secure</span></div>
+               <div class="pre-line"><span>data<em>·</em>nodes</span></div>
+            </div>
+            <div class="preloader-bar">
+               <div class="bar-fill" id="preBar"></div>
+            </div>
+            <div class="preloader-bottomline">
+               <span class="mono">EDITION MMXXVI</span>
+               <span class="mono">STANDARD OPERATING FRAMEWORK</span>
+            </div>
+         </div>
+      </div>
+      <!-- ============ APP ============ -->
+      <div id="mainAppContent">
+         <!-- Header -->
+         <header class="site-header">
+            <a class="brand" href="#">
+               <svg class="mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16 2L28 8V16C28 22.6 22.6 28 16 30C9.4 28 4 22.6 4 16V8L16 2Z" stroke="currentColor" stroke-width="1.4"/>
+                  <path d="M11 14L15 18L21 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+               </svg>
+               <div class="brand-txt">
+                  <span class="wordmark">SASP<em>/</em>Academy</span>
+                  <span class="sub mono">Field Operations · Ed. MMXXVI</span>
+               </div>
+            </a>
+            <div class="header-mid mono" id="headerClock">
+               <span class="live-dot"></span>
+               <span id="clockText">--:--:-- UTC</span>
+            </div>
+            <div class="header-right">
+               <button class="theme-toggle" id="themeToggle" data-cursor="toggle" aria-label="Toggle theme">
+               <span class="tt-track"><span class="tt-thumb"></span></span>
+               <span class="mono tt-label" id="themeLabel">NIGHT</span>
+               </button>
+               <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+               <span></span><span></span>
+               </button>
+            </div>
+         </header>
+         <!-- Sidebar -->
+         <div class="sidebar-overlay" id="sidebarOverlay"></div>
+         <nav class="sidebar" id="sidebarMenu">
+            <div class="sidebar-inner">
+               <div class="side-kicker mono">Chapters<span>07</span></div>
+               <div class="nav-menu" id="navMenu">
+                  <button class="tab-btn active" data-tab="charge-sheet" data-num="01"><span class="num mono">01</span><span class="lbl">Charge Sheet</span><span class="arw">→</span></button>
+                  <button class="tab-btn" data-tab="booking-summary" data-num="02"><span class="num mono">02</span><span class="lbl">Booking Summary</span><span class="badge-count mono" id="globalCartBadge">0</span></button>
+                  <button class="tab-btn" data-tab="penal-codes" data-num="03"><span class="num mono">03</span><span class="lbl">Penal Codes</span><span class="arw">→</span></button>
+                  <button class="tab-btn" data-tab="ten-codes" data-num="04"><span class="num mono">04</span><span class="lbl">Radio Codes</span><span class="arw">→</span></button>
+                  <button class="tab-btn" data-tab="ui-training" data-num="05"><span class="num mono">05</span><span class="lbl">MDT Training</span><span class="arw">→</span></button>
+                  <button class="tab-btn" data-tab="sop-training" data-num="06"><span class="num mono">06</span><span class="lbl">SOP Doctrine</span><span class="arw">→</span></button>
+                  <button class="tab-btn" data-tab="field-training" data-num="07"><span class="num mono">07</span><span class="lbl">Field Protocol</span><span class="arw">→</span></button>
+               </div>
+               <div class="side-foot">
+                  <div class="foot-quote">
+                     <em>“Discipline is memory made muscular.”</em>
+                     <span class="mono">— Manual, §0.1</span>
+                  </div>
+                  <div class="foot-meta mono">
+                     <span>v2026.1</span>
+                     <span>Secure Node · <span class="live-dot small"></span>Online</span>
+                  </div>
+               </div>
+            </div>
+         </nav>
+         <main>
+            <!-- ================= 01 · CHARGE SHEET ================= -->
+            <section id="charge-sheet" class="tab-content active">
+               <div class="chapter-hero">
+                  <div class="chap-kicker mono">
+                     <span>Chapter 01</span><em>·</em><span>Charge Sheet</span><em>·</em><span id="presetCount">—</span>
+                  </div>
+                  <h1 class="chap-title reveal-lines">
+                     <span class="line"><span>Preset <i>arsenals</i></span></span>
+                     <span class="line"><span>of prosecutable</span></span>
+                     <span class="line"><span>circumstance.</span></span>
+                  </h1>
+                  <div class="chap-lede">
+                     <p>Curated charge combinations for repeat scenarios — robberies, pursuits, controlled substances. Load a preset; every linked penal code is quietly composed into the booking summary, deduplicated automatically.</p>
+                     <div class="chap-cta">
+                        <button class="btn-ghost" data-tab-jump="booking-summary" data-cursor="view">Open booking summary</button>
+                        <span class="mono">Presets are curated by the training board.</span>
+                     </div>
+                  </div>
+               </div>
+               <div class="robbery-grid" id="robberyGrid"></div>
+            </section>
+            <!-- ================= 02 · BOOKING SUMMARY ================= -->
+            <section id="booking-summary" class="tab-content">
+               <div class="chapter-hero">
+                  <div class="chap-kicker mono"><span>Chapter 02</span><em>·</em><span>Booking Summary</span></div>
+                  <h1 class="chap-title reveal-lines">
+                     <span class="line"><span>The ledger</span></span>
+                     <span class="line"><span>of <i>everything</i></span></span>
+                     <span class="line"><span>you selected.</span></span>
+                  </h1>
+               </div>
+               <div class="booking-workspace-container">
+                  <div class="booking-left">
+                     <div class="summary-headline-card">
+                        <div>
+                           <span class="mono kicker">Active Draft</span>
+                           <h2>Booking Composition</h2>
+                           <p>Review selected criminal presets, singular infractions, and institutional fine metrics below.</p>
+                        </div>
+                        <button class="btn-clear-all" onclick="clearGlobalCart()">Clear all selected codes</button>
+                     </div>
+                     <div class="summary-items-list" id="workspaceCartItems"></div>
+                  </div>
+                  <aside class="summary-aggregated-box">
+                     <span class="mono kicker">Run Totals</span>
+                     <h3>Financial &amp; Jail</h3>
+                     <div class="meta-summary-row"><span>Accumulated fine</span><span id="boxFine" class="mono">$0</span></div>
+                     <div class="meta-summary-row"><span>Accumulated time</span><span id="boxTime" class="mono">0 months</span></div>
+                     <div class="meta-summary-row"><span>Accumulated CMS</span><span id="boxCMS" class="mono">0 tasks</span></div>
+                     <div class="meta-summary-row total-bold"><span>Total booking</span><span id="boxGrandTotal" class="mono">$0 · 0m · 0t</span></div>
+                  </aside>
+               </div>
+            </section>
+            <!-- ================= 03 · PENAL CODES ================= -->
+            <section id="penal-codes" class="tab-content">
+               <div class="chapter-hero">
+                  <div class="chap-kicker mono"><span>Chapter 03</span><em>·</em><span>Penal Codes Directory</span><em>·</em><span id="penalCount">—</span></div>
+                  <h1 class="chap-title reveal-lines">
+                     <span class="line"><span>Every <i>offense</i>,</span></span>
+                     <span class="line"><span>indexed and</span></span>
+                     <span class="line"><span>quickly cited.</span></span>
+                  </h1>
+               </div>
+               <div class="filter-bar">
+                  <input type="text" id="searchBox" class="search-box" placeholder="Search offenses, statutes, jail-time…" oninput="filterTable()">
+                  <div class="filter-buttons-scroll">
+                     <button class="filter-btn active" onclick="filterCategory('all', this)">All</button>
+                     <button class="filter-btn" onclick="filterCategory('traffic', this)">Traffic</button>
+                     <button class="filter-btn" onclick="filterCategory('infraction', this)">Infraction</button>
+                     <button class="filter-btn" onclick="filterCategory('misdemeanor', this)">Misdemeanor</button>
+                     <button class="filter-btn" onclick="filterCategory('felony', this)">Felony</button>
+                     <button class="filter-btn" onclick="filterCategory('hut', this)">H.U.T</button>
+                     <button class="filter-btn" onclick="filterCategory('internal_affairs', this)">Internal Affairs</button>
+                  </div>
+               </div>
+               <div class="table-container">
+                  <table>
+                     <thead>
+                        <tr>
+                           <th style="width:26%">Offense</th>
+                           <th style="width:14%">Class</th>
+                           <th style="width:34%">Statutory definition</th>
+                           <th style="width:9%">Fine</th>
+                           <th style="width:7%">Jail</th>
+                           <th style="width:5%">CMS</th>
+                           <th style="width:5%; text-align:center;">Add</th>
+                        </tr>
+                     </thead>
+                     <tbody id="penalCodesTableBody">
+                        <tr>
+                           <td colspan="7" class="empty-cell">Loading legal code indexes…</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+            <!-- ================= 04 · RADIO CODES ================= -->
+            <section id="ten-codes" class="tab-content">
+               <div class="chapter-hero">
+                  <div class="chap-kicker mono"><span>Chapter 04</span><em>·</em><span>Radio Codes</span></div>
+                  <h1 class="chap-title reveal-lines">
+                     <span class="line"><span>The <i>vocabulary</i></span></span>
+                     <span class="line"><span>of the airwave.</span></span>
+                  </h1>
+               </div>
+               <div class="filter-bar">
+                  <select id="radioCodeCategory" class="search-box select" onchange="changeRadioCategory()">
+                     <option value="10-CODES">10-Codes</option>
+                     <option value="ROUTINE-CODES">Routine Codes</option>
+                     <option value="COLOR-CODES">Color Codes</option>
+                  </select>
+                  <div class="dual-row">
+                     <input type="text" id="radioSearchBox" class="search-box" placeholder="Search codes or meanings…" oninput="applyRadioFilters()">
+                     <button class="btn-add outline" onclick="shuffleRadioCodes()" data-cursor="shuffle">↯ Shuffle</button>
+                  </div>
+                  <div class="filter-buttons-scroll" id="priorityFilters">
+                     <button class="filter-btn active" onclick="filterRadioPriority('all', this)">All</button>
+                     <button class="filter-btn" onclick="filterRadioPriority('Low', this)">Low</button>
+                     <button class="filter-btn" onclick="filterRadioPriority('Routine', this)">Routine</button>
+                     <button class="filter-btn" onclick="filterRadioPriority('Medium', this)">Medium</button>
+                     <button class="filter-btn" onclick="filterRadioPriority('High', this)">High</button>
+                     <button class="filter-btn" onclick="filterRadioPriority('Communication', this)">Comms</button>
+                  </div>
+               </div>
+               <div class="table-container">
+                  <table>
+                     <thead>
+                        <tr>
+                           <th style="width:20%">Code</th>
+                           <th style="width:60%">Meaning</th>
+                           <th style="width:20%" class="radio-extra-col">Priority</th>
+                        </tr>
+                     </thead>
+                     <tbody id="radioCodesTableBody">
+                        <tr>
+                           <td colspan="3" class="empty-cell">Loading radio codes…</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+            <!-- ================= 05 · UI TRAINING ================= -->
+            <section id="ui-training" class="tab-content">
+               <div class="chapter-hero">
+                  <div class="chap-kicker mono"><span>Chapter 05</span><em>·</em><span>MDT Training</span></div>
+                  <h1 class="chap-title reveal-lines">
+                     <span class="line"><span>Learn the</span></span>
+                     <span class="line"><span><i>console</i>.</span></span>
+                  </h1>
+               </div>
+               <div class="video-frame">
+                  <div class="video-frame-tag mono"><span class="live-dot"></span>PLAYBACK · 01/03</div>
+                  <div class="video-wrapper">
+                     <iframe src="https://www.youtube.com/embed/XpHMtT885Io?si=6chaM4tVL7wNb-BW" title="UI Training" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                  </div>
+               </div>
+            </section>
+            <!-- ================= 06 · SOP ================= -->
+            <section id="sop-training" class="tab-content">
+               <div class="chapter-hero">
+                  <div class="chap-kicker mono"><span>Chapter 06</span><em>·</em><span>SOP Doctrine</span></div>
+                  <h1 class="chap-title reveal-lines">
+                     <span class="line"><span>Standard</span></span>
+                     <span class="line"><span><i>operating</i></span></span>
+                     <span class="line"><span>procedure.</span></span>
+                  </h1>
+               </div>
+               <div class="video-frame">
+                  <div class="video-frame-tag mono"><span class="live-dot"></span>PLAYBACK · 02/03</div>
+                  <div class="video-wrapper">
+                     <iframe src="https://www.youtube.com/embed/_qO8apr3X2M?si=-y-AOaFcdasRocrO" title="SOP Training" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                  </div>
+               </div>
+            </section>
+            <!-- ================= 07 · FIELD ================= -->
+            <section id="field-training" class="tab-content">
+               <div class="chapter-hero">
+                  <div class="chap-kicker mono"><span>Chapter 07</span><em>·</em><span>Field Protocol</span></div>
+                  <h1 class="chap-title reveal-lines">
+                     <span class="line"><span>In <i>the field</i>,</span></span>
+                     <span class="line"><span>everything counts.</span></span>
+                  </h1>
+               </div>
+               <div class="video-frame">
+                  <div class="video-frame-tag mono"><span class="live-dot"></span>PLAYBACK · 03/03</div>
+                  <div class="video-wrapper">
+                     <iframe src="https://www.youtube.com/embed/9Mo-oGfCwpM?si=An8iliFkXBNFxcyc" title="Field Training" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                  </div>
+               </div>
+            </section>
+            <!-- ================= MANIFESTO CHAPTERS ================= -->
+            <section class="manifesto">
+               <div class="chap-kicker mono"><span>Manual</span><em>·</em><span>Field Doctrine</span></div>
+               <h2 class="manifesto-title reveal-lines">
+                  <span class="line"><span>Four ideas</span></span>
+                  <span class="line"><span>every cadet</span></span>
+                  <span class="line"><span><i>carries</i>.</span></span>
+               </h2>
+               <ol class="manifesto-list">
+                  <li>
+                     <span class="mono num">§01</span>
+                     <h3>Speak in codes, not opinions.</h3>
+                     <p>The radio is a shared instrument. Say only what dispatch, supervisors and every unit in the field can act on. Ambiguity is friction, and friction costs seconds.</p>
+                  </li>
+                  <li>
+                     <span class="mono num">§02</span>
+                     <h3>Cite the statute, then the human.</h3>
+                     <p>Every stop, arrest, and citation begins with a section — but ends with a person. Precision protects both sides of the badge; kindness is not a weakness of law.</p>
+                  </li>
+                  <li>
+                     <span class="mono num">§03</span>
+                     <h3>The console is a partner.</h3>
+                     <p>The MDT does not replace judgment; it accelerates it. Train the reflexes until the interface disappears and only decisions remain.</p>
+                  </li>
+                  <li>
+                     <span class="mono num">§04</span>
+                     <h3>Leave the shift better than you found it.</h3>
+                     <p>Reports filed, kit accounted, radios docked, cadets briefed. The last discipline of a good tour is a clean handoff.</p>
+                  </li>
+               </ol>
+            </section>
+         </main>
+         <!-- ================= FOOTER ================= -->
+         <footer class="site-footer">
+            <div class="footer-top">
+               <div>
+                  <div class="chap-kicker mono"><span>Colophon</span></div>
+                  <p class="foot-lede">Set in Fraunces and Inter Tight. Composed on obsidian. Amber where the law reaches, silver where it listens.</p>
+               </div>
+               <div class="foot-cols">
+                  <div>
+                     <span class="mono kicker">Chapters</span>
+                     <ul>
+                        <li><button data-tab-jump="charge-sheet">01 Charge Sheet</button></li>
+                        <li><button data-tab-jump="booking-summary">02 Booking Summary</button></li>
+                        <li><button data-tab-jump="penal-codes">03 Penal Codes</button></li>
+                        <li><button data-tab-jump="ten-codes">04 Radio Codes</button></li>
+                     </ul>
+                  </div>
+                  <div>
+                     <span class="mono kicker">Training</span>
+                     <ul>
+                        <li><button data-tab-jump="ui-training">05 MDT</button></li>
+                        <li><button data-tab-jump="sop-training">06 SOP Doctrine</button></li>
+                        <li><button data-tab-jump="field-training">07 Field Protocol</button></li>
+                     </ul>
+                  </div>
+                  <div>
+                     <span class="mono kicker">Meta</span>
+                     <ul>
+                        <li>Edition MMXXVI</li>
+                        <li>Node: LA-Central</li>
+                        <li>Status: <span class="live-dot small"></span>Online</li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+            <div class="footer-huge" aria-hidden="true">
+               <span>SASP</span><em>·</em><span>Academy</span><em>·</em><span>2026</span>
+            </div>
+            <div class="footer-bottom mono">
+               <span>© SASP Academy · Manual, Edition MMXXVI.</span>
+               <span>Built for the field. Rendered on the console.</span>
+            </div>
+         </footer>
+         <!-- ================= LIVE MARQUEE ================= -->
+         <div class="marquee-strip" id="marqueeStrip" aria-hidden="true">
+            <div class="marquee-track" id="marqueeTrack"></div>
+         </div>
+         <!-- Floating booking summary trigger -->
+         <button class="floating-summary-trigger" id="floatingSummaryBar" data-tab-jump="booking-summary">
+         <span class="fs-kicker mono">Active draft</span>
+         <span class="fs-title">Booking summary</span>
+         <span class="action-badge mono" id="floatingCartBadge">0</span>
+         </button>
+      </div>
+      <!-- Libraries: Lenis (smooth scroll) + GSAP (reveals) -->
+      <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+      <script src="./script.js"></script>
+   </body>
 </html>
